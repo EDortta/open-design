@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Open Design for GitHub</title>
+  <style>
+    :root {
+      --bg: oklch(98% 0.005 250);
+      --surface: oklch(100% 0 0);
+      --surface-strong: oklch(96% 0.01 250);
+      --fg: oklch(22% 0.02 240);
+      --muted: oklch(50% 0.018 240);
+      --border: oklch(90% 0.008 240);
+      --accent: oklch(58% 0.16 145);
+      --accent-soft: oklch(95% 0.04 145);
+      --success: oklch(62% 0.18 145);
+      --warn: oklch(75% 0.15 85);
+      --danger: oklch(60% 0.2 28);
+      --shell: oklch(18% 0.02 240);
+      --shadow: 0 20px 60px color-mix(in srgb, black 10%, transparent);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max: 1200px;
+      --font-display: "Sora", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--fg);
+      background:
+        radial-gradient(circle at top right, color-mix(in oklab, var(--accent) 14%, transparent) 0, transparent 28%),
+        linear-gradient(180deg, oklch(99% 0.004 250), var(--bg));
+      line-height: 1.55;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .shell {
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: color-mix(in srgb, white 82%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, white);
+    }
+
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 74px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 620;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background:
+        linear-gradient(140deg, color-mix(in srgb, var(--accent) 88%, white), color-mix(in srgb, var(--accent) 40%, var(--shell)));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+    }
+
+    .brand-copy small,
+    .eyebrow,
+    .meta-label,
+    .kicker,
+    .proof-label,
+    .lineage-note,
+    .status-pill {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav .nav-cta {
+      color: var(--fg);
+      font-weight: 580;
+    }
+
+    .hero {
+      padding: 72px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy,
+    .hero-console,
+    .tour-panel,
+    .capability,
+    .lineage-card,
+    .cta-panel,
+    .proof-card {
+      background: color-mix(in srgb, var(--surface) 92%, white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -120px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in oklab, var(--accent) 22%, transparent), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: color-mix(in srgb, var(--fg) 88%, var(--accent));
+      margin-bottom: 18px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--success);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 18%, transparent);
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
+      text-wrap: pretty;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 7vw, 5.4rem);
+      line-height: 0.95;
+      max-width: 11ch;
+    }
+
+    .hero-copy p {
+      max-width: 58ch;
+      font-size: 18px;
+      color: color-mix(in srgb, var(--fg) 78%, var(--muted));
+      margin: 20px 0 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 590;
+      letter-spacing: 0.02em;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+      cursor: pointer;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--fg);
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .meta-card {
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      background: color-mix(in srgb, var(--surface-strong) 72%, white);
+      border: 1px solid color-mix(in srgb, var(--border) 80%, white);
+    }
+
+    .meta-card strong,
+    .proof-value {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-top: 8px;
+    }
+
+    .hero-console {
+      background: linear-gradient(180deg, oklch(20% 0.02 240), oklch(14% 0.02 240));
+      color: oklch(94% 0.01 250);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .console-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .console-dots {
+      display: inline-flex;
+      gap: 8px;
+    }
+
+    .console-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .status-pill {
+      color: oklch(88% 0.02 145);
+    }
+
+    .terminal {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.75;
+      min-height: 312px;
+    }
+
+    .terminal .prompt {
+      color: oklch(84% 0.11 145);
+    }
+
+    .terminal .dim {
+      color: rgba(255, 255, 255, 0.56);
+    }
+
+    .command-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .command-chip {
+      flex: 1 1 270px;
+      min-height: 48px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      color: oklch(90% 0.01 250);
+      padding: 0 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    .proof-strip {
+      padding: 18px 0 12px;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .proof-card {
+      padding: 18px;
+    }
+
+    .section {
+      padding: 40px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.7fr);
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 58ch;
+    }
+
+    .tour-panel {
+      padding: 18px;
+    }
+
+    .tab-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+
+    .tab[aria-selected="true"] {
+      color: var(--fg);
+      border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+      background: color-mix(in srgb, var(--accent-soft) 55%, white);
+    }
+
+    .tab-panels {
+      display: grid;
+    }
+
+    .tab-panel {
+      display: none;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .tab-panel.is-active {
+      display: grid;
+    }
+
+    .panel-stage {
+      min-height: 360px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--surface) 92%, white), color-mix(in srgb, var(--surface-strong) 74%, white));
+      border: 1px solid var(--border);
+      padding: 22px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+
+    .stage-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .window-controls {
+      display: inline-flex;
+      gap: 8px;
+    }
+
+    .window-controls span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--muted) 25%, white);
+    }
+
+    .stage-label {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mock-grid,
+    .mini-stats,
+    .lineage-grid,
+    .capability-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mock-grid {
+      grid-template-columns: 1.3fr 0.9fr;
+    }
+
+    .mock-card,
+    .mock-tile,
+    .lineage-card {
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 82%, white);
+    }
+
+    .mock-card {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .mock-card.large {
+      min-height: 210px;
+      align-content: start;
+    }
+
+    .mock-kicker {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .mock-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      max-width: 14ch;
+    }
+
+    .mock-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .bar {
+      height: 10px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--border) 55%, white);
+      overflow: hidden;
+    }
+
+    .bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: color-mix(in srgb, var(--accent) 78%, white);
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mock-tile {
+      padding: 16px;
+      min-height: 98px;
+    }
+
+    .mini-stats {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mini-stats .mock-tile strong {
+      display: block;
+      font-size: 1.3rem;
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-top: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-copy {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      padding: 12px 8px 12px 0;
+    }
+
+    .panel-copy h3 {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .panel-copy p,
+    .capability p,
+    .lineage-card p,
+    .cta-panel p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+    }
+
+    .panel-points,
+    .capability ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .panel-points li,
+    .capability li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: color-mix(in srgb, var(--fg) 82%, var(--muted));
+    }
+
+    .bullet {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 8px;
+      background: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .capability-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .capability {
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .capability h3 {
+      font-size: 1.45rem;
+      line-height: 1.02;
+    }
+
+    .lineage-grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .lineage-card {
+      padding: 24px;
+    }
+
+    .lineage-card strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-panel {
+      padding: 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -50px -60px auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), transparent 66%);
+      pointer-events: none;
+    }
+
+    .cta-panel h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      max-width: 12ch;
+    }
+
+    .site-footer {
+      padding: 24px 0 40px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .tab-panel,
+      .section-head,
+      .lineage-grid,
+      .cta-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .capability-grid,
+      .proof-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel-copy {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site-header .container {
+        align-items: flex-start;
+        padding: 14px 0;
+      }
+
+      .nav {
+        width: 100%;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      .hero-copy,
+      .hero-console,
+      .tour-panel,
+      .capability,
+      .lineage-card,
+      .cta-panel,
+      .proof-card {
+        border-radius: 22px;
+      }
+
+      .hero-copy,
+      .hero-console,
+      .cta-panel {
+        padding: 22px;
+      }
+
+      .hero-meta,
+      .mini-stats,
+      .proof-grid,
+      .capability-grid,
+      .mock-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mock-grid {
+        gap: 12px;
+      }
+
+      h1 {
+        font-size: clamp(2.6rem, 14vw, 4rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="site-header">
+      <div class="container">
+        <a class="brand" href="#top" aria-label="Open Design">
+          <span class="brand-mark">OD</span>
+          <span class="brand-copy">
+            <strong>Open Design</strong>
+            <small>Landing de projeto no GitHub</small>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Seções">
+          <a href="#tour">Tour</a>
+          <a href="#capabilities">Capacidades</a>
+          <a href="#lineage">Origem</a>
+          <a class="nav-cta" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">Ver no GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy" data-od-id="hero">
+            <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Open-source design engine para agentes</div>
+            <h1>Seu agente vira a camada de design do produto.</h1>
+            <p>
+              Open Design transforma o fluxo de briefing, direção visual e entrega em artefatos reais:
+              protótipos web, dashboards, decks, imagens e vídeo. Tudo em arquivos editáveis,
+              com `DESIGN.md`, plugins e exportação direta.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">Abrir repositório</a>
+              <a class="btn btn-secondary" href="https://open-design.ai" target="_blank" rel="noreferrer">Ver site oficial</a>
+            </div>
+            <div class="hero-meta" aria-label="Destaques">
+              <div class="meta-card">
+                <span class="meta-label">Posicionamento</span>
+                <strong>Alternativa open-source ao Claude Design</strong>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label">Entrega</span>
+                <strong>HTML, PDF, PPTX e MP4</strong>
+              </div>
+              <div class="meta-card">
+                <span class="meta-label">Operação</span>
+                <strong>Local-first para macOS e Windows</strong>
+              </div>
+            </div>
+          </div>
+
+          <aside class="hero-console" aria-label="Exemplo de uso">
+            <div class="console-top">
+              <div class="console-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <span class="status-pill">fluxo agent-native · design + código</span>
+            </div>
+            <div class="terminal">
+              <div><span class="prompt">$</span> <span>od mcp install codex</span></div>
+              <div class="dim">Conecta o loop de design ao agente que sua equipe já usa.</div>
+              <br />
+              <div><span class="prompt">$</span> <span>od plugin apply od-default --input brief="landing page para produto devtools"</span></div>
+              <div class="dim">O sistema trava o briefing, escolhe direção e gera a primeira entrega.</div>
+              <br />
+              <div><span class="prompt">></span> <span>protótipos web · dashboards · decks · imagens · vídeo</span></div>
+              <div><span class="prompt">></span> <span>151 design systems · 261 plugins oficiais · 25 CLIs locais</span></div>
+              <div><span class="prompt">></span> <span>preview sandboxed · exportação pronta para handoff</span></div>
+            </div>
+            <div class="command-bar">
+              <label class="sr-only" for="install-command">Comando de instalação</label>
+              <input id="install-command" class="command-chip" value="od mcp install codex" readonly />
+              <button class="btn btn-secondary" id="copy-command" type="button">Copiar comando</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="proof-strip">
+        <div class="container proof-grid" data-od-id="proof-strip">
+          <article class="proof-card">
+            <span class="proof-label">Agentes compatíveis</span>
+            <strong class="proof-value">25</strong>
+            <p>Executáveis locais distintos suportados no loop nativo.</p>
+          </article>
+          <article class="proof-card">
+            <span class="proof-label">Plugins oficiais</span>
+            <strong class="proof-value">261</strong>
+            <p>Marketplace embutido para skills, cenários e sistemas.</p>
+          </article>
+          <article class="proof-card">
+            <span class="proof-label">Design systems</span>
+            <strong class="proof-value">151</strong>
+            <p>Pacotes visuais prontos para moldar saída com `DESIGN.md`.</p>
+          </article>
+          <article class="proof-card">
+            <span class="proof-label">Prompts de imagem</span>
+            <strong class="proof-value">93</strong>
+            <p>Templates replicáveis com modelo, aspecto e referência.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="tour" class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="kicker">Tour de produto</div>
+              <h2>Uma plataforma, vários artefatos de design.</h2>
+            </div>
+            <p>
+              O repositório descreve um Studio capaz de gerar protótipos, live artifacts,
+              decks e mídia a partir do mesmo contrato visual. Abaixo, uma leitura objetiva
+              do que isso significa para times que constroem interfaces.
+            </p>
+          </div>
+
+          <div class="tour-panel" data-od-id="tour-panel">
+            <div class="tab-list" role="tablist" aria-label="Tipos de saída">
+              <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="panel-prototype" id="tab-prototype">Prototype</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-dashboard" id="tab-dashboard">Live artifact</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-deck" id="tab-deck">Deck</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-media" id="tab-media">Image + Video</button>
+            </div>
+
+            <div class="tab-panels">
+              <section class="tab-panel is-active" id="panel-prototype" role="tabpanel" aria-labelledby="tab-prototype">
+                <div class="panel-stage">
+                  <div class="stage-top">
+                    <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <div class="stage-label">Prototype Studio</div>
+                  </div>
+                  <div class="mock-grid">
+                    <div class="mock-card large">
+                      <span class="mock-kicker">Prompt → direção → artefato</span>
+                      <div class="mock-title">Landing pages, apps e dashboards em HTML real.</div>
+                      <div class="mock-bars">
+                        <div class="bar"><span style="width: 82%"></span></div>
+                        <div class="bar"><span style="width: 61%"></span></div>
+                        <div class="bar"><span style="width: 74%"></span></div>
+                      </div>
+                    </div>
+                    <div class="stack">
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Preview</span>
+                        <strong>Sandboxed iframe</strong>
+                      </div>
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Handoff</span>
+                        <strong>HTML exportável</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mini-stats">
+                    <div class="mock-tile"><span class="mock-kicker">Superfícies</span><strong>Web · desktop · mobile</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Direção</span><strong>`DESIGN.md`</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Loop</span><strong>Critique + deliver</strong></div>
+                  </div>
+                </div>
+                <div class="panel-copy">
+                  <h3>Prototipagem que já nasce como código.</h3>
+                  <p>
+                    Em vez de entregar uma maquete estática, o fluxo gera um arquivo executável,
+                    editável e alinhado ao sistema visual ativo.
+                  </p>
+                  <ul class="panel-points">
+                    <li><span class="bullet"></span><span>Serve para landing pages, apps mobile e páginas editoriais no mesmo fluxo.</span></li>
+                    <li><span class="bullet"></span><span>O agente lê skill, template e design system antes de escrever a entrega.</span></li>
+                    <li><span class="bullet"></span><span>Exporta como HTML, sem perder a possibilidade de seguir iterando no código.</span></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="tab-panel" id="panel-dashboard" role="tabpanel" aria-labelledby="tab-dashboard">
+                <div class="panel-stage">
+                  <div class="stage-top">
+                    <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <div class="stage-label">Live artifact</div>
+                  </div>
+                  <div class="mock-grid">
+                    <div class="mock-card large">
+                      <span class="mock-kicker">Decision room</span>
+                      <div class="mock-title">Artefatos vivos para KPI, pesquisa e operação.</div>
+                      <div class="mock-bars">
+                        <div class="bar"><span style="width: 69%"></span></div>
+                        <div class="bar"><span style="width: 54%"></span></div>
+                        <div class="bar"><span style="width: 87%"></span></div>
+                      </div>
+                    </div>
+                    <div class="stack">
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Edição</span>
+                        <strong>Tweaks e parâmetros</strong>
+                      </div>
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Uso</span>
+                        <strong>Reuniões e walls</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mini-stats">
+                    <div class="mock-tile"><span class="mock-kicker">Manifest</span><strong>Re-render sem reload</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Formato</span><strong>Dashboard editável</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Cenário</span><strong>Ops · research · produto</strong></div>
+                  </div>
+                </div>
+                <div class="panel-copy">
+                  <h3>Para quando o design precisa continuar útil depois do preview.</h3>
+                  <p>
+                    O README trata esses artefatos como superfícies de trabalho, não apenas peças de apresentação.
+                  </p>
+                  <ul class="panel-points">
+                    <li><span class="bullet"></span><span>Bom encaixe para decision rooms, painéis operacionais e walls de acompanhamento.</span></li>
+                    <li><span class="bullet"></span><span>O foco é editabilidade in-place, não só estética de screenshot.</span></li>
+                    <li><span class="bullet"></span><span>Ideal para times que querem controlar conteúdo e comportamento na mesma página.</span></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="tab-panel" id="panel-deck" role="tabpanel" aria-labelledby="tab-deck">
+                <div class="panel-stage">
+                  <div class="stage-top">
+                    <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <div class="stage-label">Deck mode</div>
+                  </div>
+                  <div class="mock-grid">
+                    <div class="mock-card large">
+                      <span class="mock-kicker">Web PPT</span>
+                      <div class="mock-title">Decks navegáveis, exportáveis e guiados por layout.</div>
+                      <div class="mock-bars">
+                        <div class="bar"><span style="width: 80%"></span></div>
+                        <div class="bar"><span style="width: 72%"></span></div>
+                        <div class="bar"><span style="width: 58%"></span></div>
+                      </div>
+                    </div>
+                    <div class="stack">
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Templates</span>
+                        <strong>15 famílias de deck</strong>
+                      </div>
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Temas</span>
+                        <strong>36 variações</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mini-stats">
+                    <div class="mock-tile"><span class="mock-kicker">Export</span><strong>HTML · PDF · PPTX</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Navegação</span><strong>Teclado + páginas</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Base</span><strong>Layouts magazine</strong></div>
+                  </div>
+                </div>
+                <div class="panel-copy">
+                  <h3>Deck como artefato de navegação, não só slide estático.</h3>
+                  <p>
+                    O projeto incorpora templates e skills dedicadas para apresentações com ritmo, teclado e exportação.
+                  </p>
+                  <ul class="panel-points">
+                    <li><span class="bullet"></span><span>Preserva o fluxo de leitura em HTML e entrega também PDF e PPTX.</span></li>
+                    <li><span class="bullet"></span><span>Reaproveita frameworks de deck em vez de reescrever estrutura a cada geração.</span></li>
+                    <li><span class="bullet"></span><span>Útil para weekly updates, pitch e apresentações editoriais.</span></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section class="tab-panel" id="panel-media" role="tabpanel" aria-labelledby="tab-media">
+                <div class="panel-stage">
+                  <div class="stage-top">
+                    <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <div class="stage-label">Media pipeline</div>
+                  </div>
+                  <div class="mock-grid">
+                    <div class="mock-card large">
+                      <span class="mock-kicker">Image + HyperFrames</span>
+                      <div class="mock-title">Do still ao MP4 com prompts, catálogos e renderização guiada.</div>
+                      <div class="mock-bars">
+                        <div class="bar"><span style="width: 74%"></span></div>
+                        <div class="bar"><span style="width: 66%"></span></div>
+                        <div class="bar"><span style="width: 91%"></span></div>
+                      </div>
+                    </div>
+                    <div class="stack">
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Prompts</span>
+                        <strong>93 templates</strong>
+                      </div>
+                      <div class="mock-tile">
+                        <span class="mock-kicker">Motion</span>
+                        <strong>11 templates HyperFrames</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mini-stats">
+                    <div class="mock-tile"><span class="mock-kicker">Imagem</span><strong>Alta resolução</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Vídeo</span><strong>HTML → MP4</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker">Camada</span><strong>Modelo + áudio</strong></div>
+                  </div>
+                </div>
+                <div class="panel-copy">
+                  <h3>O mesmo estúdio estende para imagem e motion.</h3>
+                  <p>
+                    A ambição do repositório não para em UI: ele também cobre ativos visuais, prompts replicáveis e vídeo programático.
+                  </p>
+                  <ul class="panel-points">
+                    <li><span class="bullet"></span><span>HyperFrames entra como camada nativa para motion graphics em MP4.</span></li>
+                    <li><span class="bullet"></span><span>Os prompts prontos tornam a geração reproduzível e menos dependente de tentativa aleatória.</span></li>
+                    <li><span class="bullet"></span><span>Boa vitrine para times que tratam design como sistema de produção multimídia.</span></li>
+                  </ul>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="capabilities" class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="kicker">Por que olhar este projeto</div>
+              <h2>Infra para design com agentes, não só uma interface bonita.</h2>
+            </div>
+            <p>
+              A proposta central é transformar o laptop e o agente em um estúdio funcional,
+              com skill protocol, daemon local, preview sandboxed e contratos visuais portáveis.
+            </p>
+          </div>
+
+          <div class="capability-grid" data-od-id="capability-grid">
+            <article class="capability">
+              <span class="kicker">Filesystem-first</span>
+              <h3>Artefato como arquivo canônico.</h3>
+              <p>O produto trabalha com HTML, CSS, PDF, PPTX e MP4 como saída real, não só canvas fechado.</p>
+              <ul>
+                <li><span class="bullet"></span><span>Iteração direta em arquivos.</span></li>
+                <li><span class="bullet"></span><span>Preview embutido em sandbox.</span></li>
+                <li><span class="bullet"></span><span>Handoff mais próximo de implementação.</span></li>
+              </ul>
+            </article>
+
+            <article class="capability">
+              <span class="kicker">Design system</span>
+              <h3>`DESIGN.md` como contrato de marca portátil.</h3>
+              <p>O README posiciona o design system como peça central para moldar toda saída do agente.</p>
+              <ul>
+                <li><span class="bullet"></span><span>151 pacotes visuais citados no roadmap atual.</span></li>
+                <li><span class="bullet"></span><span>Reuso entre protótipo, deck, dashboard e mídia.</span></li>
+                <li><span class="bullet"></span><span>Consistência sem depender de retrabalho manual.</span></li>
+              </ul>
+            </article>
+
+            <article class="capability">
+              <span class="kicker">Integração</span>
+              <h3>Compatível com o stack de agentes já em uso.</h3>
+              <p>Codex, Claude Code, Cursor, Copilot e vários CLIs entram pela mesma camada MCP e runtime local.</p>
+              <ul>
+                <li><span class="bullet"></span><span>25 executáveis locais distintos no README.</span></li>
+                <li><span class="bullet"></span><span>Suporte a BYOK via endpoint compatível com OpenAI.</span></li>
+                <li><span class="bullet"></span><span>Plugins para estender workflow sob demanda.</span></li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="lineage" class="section">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="kicker">Origem e referência</div>
+              <h2>O projeto atual nasce de uma base original e assume essa linhagem.</h2>
+            </div>
+            <p>
+              O repositório de `EDortta/open-design` aparece no GitHub como fork de `nexu-io/open-design`.
+              A própria documentação também lista as referências que influenciaram a arquitetura, o fluxo de design e os templates.
+            </p>
+          </div>
+
+          <div class="lineage-grid" data-od-id="lineage-grid">
+            <article class="lineage-card">
+              <span class="lineage-note">Repositório atual</span>
+              <strong>EDortta/open-design</strong>
+              <p>
+                A versão que você pediu para destacar. Boa escolha para uma landing page porque já posiciona
+                o produto de forma clara para devs e designers que querem trabalhar em artefatos reais.
+              </p>
+            </article>
+            <article class="lineage-card">
+              <span class="lineage-note">Projeto original mencionado</span>
+              <strong>Fork de nexu-io/open-design</strong>
+              <p>
+                A landing deixa isso explícito para respeitar a origem do projeto e evitar apresentar a base como criação isolada.
+              </p>
+            </article>
+            <article class="lineage-card">
+              <span class="lineage-note">Referências citadas no README</span>
+              <strong>Claude Design, guizang-ppt, html-ppt-skill, HyperFrames e outros</strong>
+              <p>
+                A documentação trata essas referências como parte do ecossistema e da evolução do produto.
+              </p>
+            </article>
+            <article class="lineage-card">
+              <span class="lineage-note">Mensagem para a audiência</span>
+              <strong>É uma plataforma composável, aberta e extensível</strong>
+              <p>
+                O apelo não é “mais uma vitrine bonita”, e sim uma infraestrutura aberta para design operacional com agentes.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="cta-panel" data-od-id="cta-panel">
+            <div>
+              <div class="kicker">Pronto para explorar</div>
+              <h2>Abra o repositório e veja o estúdio de design agent-native em ação.</h2>
+              <p>
+                A melhor continuação para esta página é navegar pelo README, pelos plugins e pelos exemplos do Studio.
+                Se o objetivo é construir páginas visuais com agentes, esse projeto já parte do formato certo: arquivos reais e fluxo reproduzível.
+              </p>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">Ver no GitHub</a>
+              <a class="btn btn-secondary" href="https://discord.gg/mHAjSMV6gz" target="_blank" rel="noreferrer">Entrar no Discord</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-row">
+        <span>Landing page criada a partir das informações públicas do repositório `EDortta/open-design`.</span>
+        <span>Menciona explicitamente a base original `nexu-io/open-design`.</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+      var panels = Array.prototype.slice.call(document.querySelectorAll(".tab-panel"));
+      var copyButton = document.getElementById("copy-command");
+      var commandInput = document.getElementById("install-command");
+
+      function activateTab(tab) {
+        var target = tab.getAttribute("aria-controls");
+        tabs.forEach(function (item) {
+          var selected = item === tab;
+          item.setAttribute("aria-selected", String(selected));
+          item.setAttribute("tabindex", selected ? "0" : "-1");
+        });
+        panels.forEach(function (panel) {
+          panel.classList.toggle("is-active", panel.id === target);
+        });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          activateTab(tab);
+        });
+        tab.addEventListener("keydown", function (event) {
+          var index = tabs.indexOf(tab);
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            activateTab(tabs[(index + 1) % tabs.length]);
+            tabs[(index + 1) % tabs.length].focus();
+          }
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            activateTab(tabs[(index - 1 + tabs.length) % tabs.length]);
+            tabs[(index - 1 + tabs.length) % tabs.length].focus();
+          }
+        });
+      });
+
+      copyButton.addEventListener("click", async function () {
+        try {
+          await navigator.clipboard.writeText(commandInput.value);
+          copyButton.textContent = "Copiado";
+          window.setTimeout(function () {
+            copyButton.textContent = "Copiar comando";
+          }, 1400);
+        } catch (error) {
+          commandInput.focus();
+          commandInput.select();
+          copyButton.textContent = "Selecione o texto";
+          window.setTimeout(function () {
+            copyButton.textContent = "Copiar comando";
+          }, 1600);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

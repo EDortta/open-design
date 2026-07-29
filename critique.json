@@ -1,0 +1,26 @@
+{
+  "kind": "critique-panel",
+  "score": 4,
+  "axes": {
+    "clarity": {
+      "score": 4,
+      "notes": "A proposta, os números reais e a linhagem do projeto aparecem cedo."
+    },
+    "hierarchy": {
+      "score": 4,
+      "notes": "Hero forte, prova social objetiva e seção interativa centralizam a leitura."
+    },
+    "typography": {
+      "score": 4,
+      "notes": "Display com tracking negativo e labels em caixa alta com tracking positivo."
+    },
+    "motion": {
+      "score": 3,
+      "notes": "Interação de abas e feedback de cópia presentes; sem excesso de animação."
+    },
+    "brand": {
+      "score": 4,
+      "notes": "Direção tech/utility consistente com o posicionamento devtools do README."
+    }
+  }
+}
