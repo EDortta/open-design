@@ -51,9 +51,26 @@
       text-decoration: none;
     }
 
+    a.link-inline {
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+      text-underline-offset: 0.16em;
+    }
+
     button,
     input {
       font: inherit;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.94em;
+      padding: 0.12em 0.38em;
+      border-radius: 0.42em;
+      background: color-mix(in srgb, var(--surface-strong) 70%, white);
+      border: 1px solid color-mix(in srgb, var(--border) 92%, white);
+      color: color-mix(in srgb, var(--fg) 92%, var(--accent));
+      white-space: nowrap;
     }
 
     .shell {
@@ -133,6 +150,44 @@
     .nav .nav-cta {
       color: var(--fg);
       font-weight: 580;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--surface) 88%, white);
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .lang-btn.is-active {
+      background: color-mix(in srgb, var(--accent-soft) 65%, white);
+      color: var(--fg);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, var(--border));
     }
 
     .hero {
@@ -714,6 +769,11 @@
         padding: 14px 0;
       }
 
+      .header-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
       .nav {
         width: 100%;
       }
@@ -763,16 +823,23 @@
         <a class="brand" href="#top" aria-label="Open Design">
           <span class="brand-mark">OD</span>
           <span class="brand-copy">
-            <strong>Open Design</strong>
-            <small>Landing de projeto no GitHub</small>
+            <strong data-i18n="brand_name">Open Design</strong>
+            <small data-i18n="brand_subtitle">GitHub project landing page</small>
           </span>
         </a>
-        <nav class="nav" aria-label="Seções">
-          <a href="#tour">Tour</a>
-          <a href="#capabilities">Capacidades</a>
-          <a href="#lineage">Origem</a>
-          <a class="nav-cta" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">Ver no GitHub</a>
-        </nav>
+        <div class="header-actions">
+          <nav class="nav" aria-label="Sections">
+            <a href="#tour" data-i18n="nav_tour">Tour</a>
+            <a href="#capabilities" data-i18n="nav_capabilities">Capabilities</a>
+            <a href="#lineage" data-i18n="nav_lineage">Origin</a>
+            <a class="nav-cta" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer" data-i18n="nav_github">View on GitHub</a>
+          </nav>
+          <div class="lang-switcher" aria-label="Language selector">
+            <button class="lang-btn" type="button" data-lang="en">EN</button>
+            <button class="lang-btn" type="button" data-lang="es">ES</button>
+            <button class="lang-btn" type="button" data-lang="pt-BR">PT-BR</button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -780,29 +847,25 @@
       <section class="hero">
         <div class="container hero-grid">
           <div class="hero-copy" data-od-id="hero">
-            <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Open-source design engine para agentes</div>
-            <h1>Seu agente vira a camada de design do produto.</h1>
-            <p>
-              Open Design transforma o fluxo de briefing, direção visual e entrega em artefatos reais:
-              protótipos web, dashboards, decks, imagens e vídeo. Tudo em arquivos editáveis,
-              com `DESIGN.md`, plugins e exportação direta.
-            </p>
+            <div class="eyebrow"><span class="live-dot" aria-hidden="true"></span><span data-i18n="hero_eyebrow">Open-source design engine for agents</span></div>
+            <h1 data-i18n="hero_title">Your agent becomes the product design layer.</h1>
+            <p data-i18n-html="hero_body"></p>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">Abrir repositório</a>
-              <a class="btn btn-secondary" href="https://open-design.ai" target="_blank" rel="noreferrer">Ver site oficial</a>
+              <a class="btn btn-primary" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer" data-i18n="hero_primary">Open repository</a>
+              <a class="btn btn-secondary" href="https://open-design.ai" target="_blank" rel="noreferrer" data-i18n="hero_secondary">View official website</a>
             </div>
-            <div class="hero-meta" aria-label="Destaques">
+            <div class="hero-meta" aria-label="Highlights">
               <div class="meta-card">
-                <span class="meta-label">Posicionamento</span>
-                <strong>Alternativa open-source ao Claude Design</strong>
+                <span class="meta-label" data-i18n="meta_positioning_label">Positioning</span>
+                <strong data-i18n="meta_positioning_value">Open-source alternative to Claude Design</strong>
               </div>
               <div class="meta-card">
-                <span class="meta-label">Entrega</span>
-                <strong>HTML, PDF, PPTX e MP4</strong>
+                <span class="meta-label" data-i18n="meta_delivery_label">Delivery</span>
+                <strong data-i18n="meta_delivery_value">HTML, PDF, PPTX, and MP4</strong>
               </div>
               <div class="meta-card">
-                <span class="meta-label">Operação</span>
-                <strong>Local-first para macOS e Windows</strong>
+                <span class="meta-label" data-i18n="meta_operation_label">Operation</span>
+                <strong data-i18n="meta_operation_value">Local-first for macOS and Windows</strong>
               </div>
             </div>
           </div>
@@ -810,23 +873,23 @@
           <aside class="hero-console" aria-label="Exemplo de uso">
             <div class="console-top">
               <div class="console-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-              <span class="status-pill">fluxo agent-native · design + código</span>
+              <span class="status-pill" data-i18n="console_status">agent-native flow · design + code</span>
             </div>
             <div class="terminal">
               <div><span class="prompt">$</span> <span>od mcp install codex</span></div>
-              <div class="dim">Conecta o loop de design ao agente que sua equipe já usa.</div>
+              <div class="dim" data-i18n="console_line_1">Connects the design loop to the agent your team already uses.</div>
               <br />
               <div><span class="prompt">$</span> <span>od plugin apply od-default --input brief="landing page para produto devtools"</span></div>
-              <div class="dim">O sistema trava o briefing, escolhe direção e gera a primeira entrega.</div>
+              <div class="dim" data-i18n="console_line_2">The system locks the brief, chooses a direction, and generates the first delivery.</div>
               <br />
-              <div><span class="prompt">></span> <span>protótipos web · dashboards · decks · imagens · vídeo</span></div>
-              <div><span class="prompt">></span> <span>151 design systems · 261 plugins oficiais · 25 CLIs locais</span></div>
-              <div><span class="prompt">></span> <span>preview sandboxed · exportação pronta para handoff</span></div>
+              <div><span class="prompt">></span> <span data-i18n="console_line_3">web prototypes · dashboards · decks · images · video</span></div>
+              <div><span class="prompt">></span> <span data-i18n="console_line_4">151 design systems · 261 official plugins · 25 local CLIs</span></div>
+              <div><span class="prompt">></span> <span data-i18n="console_line_5">sandboxed preview · export ready for handoff</span></div>
             </div>
             <div class="command-bar">
-              <label class="sr-only" for="install-command">Comando de instalação</label>
+              <label class="sr-only" for="install-command" data-i18n="install_label">Install command</label>
               <input id="install-command" class="command-chip" value="od mcp install codex" readonly />
-              <button class="btn btn-secondary" id="copy-command" type="button">Copiar comando</button>
+              <button class="btn btn-secondary" id="copy-command" type="button" data-i18n="copy_button">Copy command</button>
             </div>
           </aside>
         </div>
@@ -835,24 +898,24 @@
       <section class="proof-strip">
         <div class="container proof-grid" data-od-id="proof-strip">
           <article class="proof-card">
-            <span class="proof-label">Agentes compatíveis</span>
+            <span class="proof-label" data-i18n="proof_1_label">Compatible agents</span>
             <strong class="proof-value">25</strong>
-            <p>Executáveis locais distintos suportados no loop nativo.</p>
+            <p data-i18n="proof_1_text">Distinct local executables supported in the native loop.</p>
           </article>
           <article class="proof-card">
-            <span class="proof-label">Plugins oficiais</span>
+            <span class="proof-label" data-i18n="proof_2_label">Official plugins</span>
             <strong class="proof-value">261</strong>
-            <p>Marketplace embutido para skills, cenários e sistemas.</p>
+            <p data-i18n="proof_2_text">Built-in marketplace for skills, scenarios, and systems.</p>
           </article>
           <article class="proof-card">
-            <span class="proof-label">Design systems</span>
+            <span class="proof-label" data-i18n="proof_3_label">Design systems</span>
             <strong class="proof-value">151</strong>
-            <p>Pacotes visuais prontos para moldar saída com `DESIGN.md`.</p>
+            <p data-i18n-html="proof_3_text"></p>
           </article>
           <article class="proof-card">
-            <span class="proof-label">Prompts de imagem</span>
+            <span class="proof-label" data-i18n="proof_4_label">Image prompts</span>
             <strong class="proof-value">93</strong>
-            <p>Templates replicáveis com modelo, aspecto e referência.</p>
+            <p data-i18n="proof_4_text">Repeatable templates with model, aspect ratio, and reference.</p>
           </article>
         </div>
       </section>
@@ -861,22 +924,18 @@
         <div class="container">
           <div class="section-head">
             <div>
-              <div class="kicker">Tour de produto</div>
-              <h2>Uma plataforma, vários artefatos de design.</h2>
+              <div class="kicker" data-i18n="tour_kicker">Product tour</div>
+              <h2 data-i18n="tour_title">One platform, multiple design artifacts.</h2>
             </div>
-            <p>
-              O repositório descreve um Studio capaz de gerar protótipos, live artifacts,
-              decks e mídia a partir do mesmo contrato visual. Abaixo, uma leitura objetiva
-              do que isso significa para times que constroem interfaces.
-            </p>
+            <p data-i18n="tour_intro">The repository describes a Studio that can generate prototypes, live artifacts, decks, and media from the same visual contract. Below is a direct reading of what that means for teams building interfaces.</p>
           </div>
 
           <div class="tour-panel" data-od-id="tour-panel">
             <div class="tab-list" role="tablist" aria-label="Tipos de saída">
-              <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="panel-prototype" id="tab-prototype">Prototype</button>
-              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-dashboard" id="tab-dashboard">Live artifact</button>
-              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-deck" id="tab-deck">Deck</button>
-              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-media" id="tab-media">Image + Video</button>
+              <button class="tab" type="button" role="tab" aria-selected="true" aria-controls="panel-prototype" id="tab-prototype" data-i18n="tab_prototype">Prototype</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-dashboard" id="tab-dashboard" data-i18n="tab_dashboard">Live artifact</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-deck" id="tab-deck" data-i18n="tab_deck">Deck</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" aria-controls="panel-media" id="tab-media" data-i18n="tab_media">Image + Video</button>
             </div>
 
             <div class="tab-panels">
@@ -884,12 +943,12 @@
                 <div class="panel-stage">
                   <div class="stage-top">
                     <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
-                    <div class="stage-label">Prototype Studio</div>
+                    <div class="stage-label" data-i18n="prototype_stage">Prototype Studio</div>
                   </div>
                   <div class="mock-grid">
                     <div class="mock-card large">
-                      <span class="mock-kicker">Prompt → direção → artefato</span>
-                      <div class="mock-title">Landing pages, apps e dashboards em HTML real.</div>
+                      <span class="mock-kicker" data-i18n="prototype_kicker">Prompt → direction → artifact</span>
+                      <div class="mock-title" data-i18n="prototype_mock_title">Landing pages, apps, and dashboards in real HTML.</div>
                       <div class="mock-bars">
                         <div class="bar"><span style="width: 82%"></span></div>
                         <div class="bar"><span style="width: 61%"></span></div>
@@ -898,31 +957,28 @@
                     </div>
                     <div class="stack">
                       <div class="mock-tile">
-                        <span class="mock-kicker">Preview</span>
-                        <strong>Sandboxed iframe</strong>
+                        <span class="mock-kicker" data-i18n="prototype_preview_label">Preview</span>
+                        <strong data-i18n="prototype_preview_value">Sandboxed iframe</strong>
                       </div>
                       <div class="mock-tile">
-                        <span class="mock-kicker">Handoff</span>
-                        <strong>HTML exportável</strong>
+                        <span class="mock-kicker" data-i18n="prototype_handoff_label">Handoff</span>
+                        <strong data-i18n="prototype_handoff_value">Exportable HTML</strong>
                       </div>
                     </div>
                   </div>
                   <div class="mini-stats">
-                    <div class="mock-tile"><span class="mock-kicker">Superfícies</span><strong>Web · desktop · mobile</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Direção</span><strong>`DESIGN.md`</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Loop</span><strong>Critique + deliver</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="prototype_surfaces_label">Surfaces</span><strong data-i18n="prototype_surfaces_value">Web · desktop · mobile</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="prototype_direction_label">Direction</span><strong data-i18n-html="prototype_direction_value"></strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="prototype_loop_label">Loop</span><strong data-i18n="prototype_loop_value">Critique + deliver</strong></div>
                   </div>
                 </div>
                 <div class="panel-copy">
-                  <h3>Prototipagem que já nasce como código.</h3>
-                  <p>
-                    Em vez de entregar uma maquete estática, o fluxo gera um arquivo executável,
-                    editável e alinhado ao sistema visual ativo.
-                  </p>
+                  <h3 data-i18n="prototype_copy_title">Prototyping that starts as code.</h3>
+                  <p data-i18n="prototype_copy_text">Instead of delivering a static mockup, the flow generates an executable, editable file aligned with the active visual system.</p>
                   <ul class="panel-points">
-                    <li><span class="bullet"></span><span>Serve para landing pages, apps mobile e páginas editoriais no mesmo fluxo.</span></li>
-                    <li><span class="bullet"></span><span>O agente lê skill, template e design system antes de escrever a entrega.</span></li>
-                    <li><span class="bullet"></span><span>Exporta como HTML, sem perder a possibilidade de seguir iterando no código.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="prototype_point_1">Fits landing pages, mobile apps, and editorial pages in the same flow.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="prototype_point_2">The agent reads the skill, template, and design system before writing the delivery.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="prototype_point_3">Exports as HTML without losing the ability to keep iterating in code.</span></li>
                   </ul>
                 </div>
               </section>
@@ -931,12 +987,12 @@
                 <div class="panel-stage">
                   <div class="stage-top">
                     <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
-                    <div class="stage-label">Live artifact</div>
+                    <div class="stage-label" data-i18n="dashboard_stage">Live artifact</div>
                   </div>
                   <div class="mock-grid">
                     <div class="mock-card large">
-                      <span class="mock-kicker">Decision room</span>
-                      <div class="mock-title">Artefatos vivos para KPI, pesquisa e operação.</div>
+                      <span class="mock-kicker" data-i18n="dashboard_kicker">Decision room</span>
+                      <div class="mock-title" data-i18n="dashboard_mock_title">Living artifacts for KPI, research, and operations.</div>
                       <div class="mock-bars">
                         <div class="bar"><span style="width: 69%"></span></div>
                         <div class="bar"><span style="width: 54%"></span></div>
@@ -945,30 +1001,28 @@
                     </div>
                     <div class="stack">
                       <div class="mock-tile">
-                        <span class="mock-kicker">Edição</span>
-                        <strong>Tweaks e parâmetros</strong>
+                        <span class="mock-kicker" data-i18n="dashboard_edit_label">Editing</span>
+                        <strong data-i18n="dashboard_edit_value">Tweaks and parameters</strong>
                       </div>
                       <div class="mock-tile">
-                        <span class="mock-kicker">Uso</span>
-                        <strong>Reuniões e walls</strong>
+                        <span class="mock-kicker" data-i18n="dashboard_use_label">Use</span>
+                        <strong data-i18n="dashboard_use_value">Meetings and walls</strong>
                       </div>
                     </div>
                   </div>
                   <div class="mini-stats">
-                    <div class="mock-tile"><span class="mock-kicker">Manifest</span><strong>Re-render sem reload</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Formato</span><strong>Dashboard editável</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Cenário</span><strong>Ops · research · produto</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="dashboard_manifest_label">Manifest</span><strong data-i18n="dashboard_manifest_value">Re-render without reload</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="dashboard_format_label">Format</span><strong data-i18n="dashboard_format_value">Editable dashboard</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="dashboard_scenario_label">Scenario</span><strong data-i18n="dashboard_scenario_value">Ops · research · product</strong></div>
                   </div>
                 </div>
                 <div class="panel-copy">
-                  <h3>Para quando o design precisa continuar útil depois do preview.</h3>
-                  <p>
-                    O README trata esses artefatos como superfícies de trabalho, não apenas peças de apresentação.
-                  </p>
+                  <h3 data-i18n="dashboard_copy_title">For when design needs to stay useful after preview.</h3>
+                  <p data-i18n="dashboard_copy_text">The README treats these artifacts as working surfaces, not only presentation pieces.</p>
                   <ul class="panel-points">
-                    <li><span class="bullet"></span><span>Bom encaixe para decision rooms, painéis operacionais e walls de acompanhamento.</span></li>
-                    <li><span class="bullet"></span><span>O foco é editabilidade in-place, não só estética de screenshot.</span></li>
-                    <li><span class="bullet"></span><span>Ideal para times que querem controlar conteúdo e comportamento na mesma página.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="dashboard_point_1">Good fit for decision rooms, operational panels, and tracking walls.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="dashboard_point_2">The focus is in-place editability, not only screenshot aesthetics.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="dashboard_point_3">Ideal for teams that want to control content and behavior on the same page.</span></li>
                   </ul>
                 </div>
               </section>
@@ -977,12 +1031,12 @@
                 <div class="panel-stage">
                   <div class="stage-top">
                     <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
-                    <div class="stage-label">Deck mode</div>
+                    <div class="stage-label" data-i18n="deck_stage">Deck mode</div>
                   </div>
                   <div class="mock-grid">
                     <div class="mock-card large">
-                      <span class="mock-kicker">Web PPT</span>
-                      <div class="mock-title">Decks navegáveis, exportáveis e guiados por layout.</div>
+                      <span class="mock-kicker" data-i18n="deck_kicker">Web PPT</span>
+                      <div class="mock-title" data-i18n="deck_mock_title">Browsable, exportable decks guided by layout.</div>
                       <div class="mock-bars">
                         <div class="bar"><span style="width: 80%"></span></div>
                         <div class="bar"><span style="width: 72%"></span></div>
@@ -991,30 +1045,28 @@
                     </div>
                     <div class="stack">
                       <div class="mock-tile">
-                        <span class="mock-kicker">Templates</span>
-                        <strong>15 famílias de deck</strong>
+                        <span class="mock-kicker" data-i18n="deck_templates_label">Templates</span>
+                        <strong data-i18n="deck_templates_value">15 deck families</strong>
                       </div>
                       <div class="mock-tile">
-                        <span class="mock-kicker">Temas</span>
-                        <strong>36 variações</strong>
+                        <span class="mock-kicker" data-i18n="deck_themes_label">Themes</span>
+                        <strong data-i18n="deck_themes_value">36 variations</strong>
                       </div>
                     </div>
                   </div>
                   <div class="mini-stats">
-                    <div class="mock-tile"><span class="mock-kicker">Export</span><strong>HTML · PDF · PPTX</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Navegação</span><strong>Teclado + páginas</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Base</span><strong>Layouts magazine</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="deck_export_label">Export</span><strong data-i18n="deck_export_value">HTML · PDF · PPTX</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="deck_navigation_label">Navigation</span><strong data-i18n="deck_navigation_value">Keyboard + pages</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="deck_base_label">Base</span><strong data-i18n="deck_base_value">Magazine layouts</strong></div>
                   </div>
                 </div>
                 <div class="panel-copy">
-                  <h3>Deck como artefato de navegação, não só slide estático.</h3>
-                  <p>
-                    O projeto incorpora templates e skills dedicadas para apresentações com ritmo, teclado e exportação.
-                  </p>
+                  <h3 data-i18n="deck_copy_title">Deck as a navigation artifact, not only a static slide.</h3>
+                  <p data-i18n="deck_copy_text">The project includes dedicated templates and skills for presentations with rhythm, keyboard control, and export.</p>
                   <ul class="panel-points">
-                    <li><span class="bullet"></span><span>Preserva o fluxo de leitura em HTML e entrega também PDF e PPTX.</span></li>
-                    <li><span class="bullet"></span><span>Reaproveita frameworks de deck em vez de reescrever estrutura a cada geração.</span></li>
-                    <li><span class="bullet"></span><span>Útil para weekly updates, pitch e apresentações editoriais.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="deck_point_1">Preserves the reading flow in HTML and also delivers PDF and PPTX.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="deck_point_2">Reuses deck frameworks instead of rewriting structure on each generation.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="deck_point_3">Useful for weekly updates, pitch, and editorial presentations.</span></li>
                   </ul>
                 </div>
               </section>
@@ -1023,12 +1075,12 @@
                 <div class="panel-stage">
                   <div class="stage-top">
                     <div class="window-controls" aria-hidden="true"><span></span><span></span><span></span></div>
-                    <div class="stage-label">Media pipeline</div>
+                    <div class="stage-label" data-i18n="media_stage">Media pipeline</div>
                   </div>
                   <div class="mock-grid">
                     <div class="mock-card large">
-                      <span class="mock-kicker">Image + HyperFrames</span>
-                      <div class="mock-title">Do still ao MP4 com prompts, catálogos e renderização guiada.</div>
+                      <span class="mock-kicker" data-i18n="media_kicker">Image + HyperFrames</span>
+                      <div class="mock-title" data-i18n="media_mock_title">From still to MP4 with prompts, catalogs, and guided rendering.</div>
                       <div class="mock-bars">
                         <div class="bar"><span style="width: 74%"></span></div>
                         <div class="bar"><span style="width: 66%"></span></div>
@@ -1037,30 +1089,28 @@
                     </div>
                     <div class="stack">
                       <div class="mock-tile">
-                        <span class="mock-kicker">Prompts</span>
-                        <strong>93 templates</strong>
+                        <span class="mock-kicker" data-i18n="media_prompts_label">Prompts</span>
+                        <strong data-i18n="media_prompts_value">93 templates</strong>
                       </div>
                       <div class="mock-tile">
-                        <span class="mock-kicker">Motion</span>
-                        <strong>11 templates HyperFrames</strong>
+                        <span class="mock-kicker" data-i18n="media_motion_label">Motion</span>
+                        <strong data-i18n="media_motion_value">11 HyperFrames templates</strong>
                       </div>
                     </div>
                   </div>
                   <div class="mini-stats">
-                    <div class="mock-tile"><span class="mock-kicker">Imagem</span><strong>Alta resolução</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Vídeo</span><strong>HTML → MP4</strong></div>
-                    <div class="mock-tile"><span class="mock-kicker">Camada</span><strong>Modelo + áudio</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="media_image_label">Image</span><strong data-i18n="media_image_value">High resolution</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="media_video_label">Video</span><strong data-i18n="media_video_value">HTML → MP4</strong></div>
+                    <div class="mock-tile"><span class="mock-kicker" data-i18n="media_layer_label">Layer</span><strong data-i18n="media_layer_value">Model + audio</strong></div>
                   </div>
                 </div>
                 <div class="panel-copy">
-                  <h3>O mesmo estúdio estende para imagem e motion.</h3>
-                  <p>
-                    A ambição do repositório não para em UI: ele também cobre ativos visuais, prompts replicáveis e vídeo programático.
-                  </p>
+                  <h3 data-i18n="media_copy_title">The same studio extends to image and motion.</h3>
+                  <p data-i18n="media_copy_text">The repository ambition does not stop at UI: it also covers visual assets, repeatable prompts, and programmatic video.</p>
                   <ul class="panel-points">
-                    <li><span class="bullet"></span><span>HyperFrames entra como camada nativa para motion graphics em MP4.</span></li>
-                    <li><span class="bullet"></span><span>Os prompts prontos tornam a geração reproduzível e menos dependente de tentativa aleatória.</span></li>
-                    <li><span class="bullet"></span><span>Boa vitrine para times que tratam design como sistema de produção multimídia.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="media_point_1">HyperFrames enters as a native layer for MP4 motion graphics.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="media_point_2">Ready prompts make generation more reproducible and less dependent on random trial.</span></li>
+                    <li><span class="bullet"></span><span data-i18n="media_point_3">A good showcase for teams treating design as a multimedia production system.</span></li>
                   </ul>
                 </div>
               </section>
@@ -1073,46 +1123,43 @@
         <div class="container">
           <div class="section-head">
             <div>
-              <div class="kicker">Por que olhar este projeto</div>
-              <h2>Infra para design com agentes, não só uma interface bonita.</h2>
+              <div class="kicker" data-i18n="cap_kicker">Why look at this project</div>
+              <h2 data-i18n="cap_title">Infrastructure for design with agents, not only a pretty interface.</h2>
             </div>
-            <p>
-              A proposta central é transformar o laptop e o agente em um estúdio funcional,
-              com skill protocol, daemon local, preview sandboxed e contratos visuais portáveis.
-            </p>
+            <p data-i18n="cap_intro">The core proposal is to turn the laptop and the agent into a working studio, with a skill protocol, local daemon, sandboxed preview, and portable visual contracts.</p>
           </div>
 
           <div class="capability-grid" data-od-id="capability-grid">
             <article class="capability">
-              <span class="kicker">Filesystem-first</span>
-              <h3>Artefato como arquivo canônico.</h3>
-              <p>O produto trabalha com HTML, CSS, PDF, PPTX e MP4 como saída real, não só canvas fechado.</p>
+              <span class="kicker" data-i18n="cap1_kicker">Filesystem-first</span>
+              <h3 data-i18n="cap1_title">Artifact as the canonical file.</h3>
+              <p data-i18n="cap1_text">The product works with HTML, CSS, PDF, PPTX, and MP4 as real output, not only a closed canvas.</p>
               <ul>
-                <li><span class="bullet"></span><span>Iteração direta em arquivos.</span></li>
-                <li><span class="bullet"></span><span>Preview embutido em sandbox.</span></li>
-                <li><span class="bullet"></span><span>Handoff mais próximo de implementação.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap1_point_1">Direct iteration in files.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap1_point_2">Embedded preview in sandbox.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap1_point_3">Handoff closer to implementation.</span></li>
               </ul>
             </article>
 
             <article class="capability">
-              <span class="kicker">Design system</span>
-              <h3>`DESIGN.md` como contrato de marca portátil.</h3>
-              <p>O README posiciona o design system como peça central para moldar toda saída do agente.</p>
+              <span class="kicker" data-i18n="cap2_kicker">Design system</span>
+              <h3 data-i18n-html="cap2_title"></h3>
+              <p data-i18n="cap2_text">The README positions the design system as a central piece for shaping every agent output.</p>
               <ul>
-                <li><span class="bullet"></span><span>151 pacotes visuais citados no roadmap atual.</span></li>
-                <li><span class="bullet"></span><span>Reuso entre protótipo, deck, dashboard e mídia.</span></li>
-                <li><span class="bullet"></span><span>Consistência sem depender de retrabalho manual.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap2_point_1">151 visual packages cited in the current roadmap.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap2_point_2">Reuse across prototype, deck, dashboard, and media.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap2_point_3">Consistency without depending on manual rework.</span></li>
               </ul>
             </article>
 
             <article class="capability">
-              <span class="kicker">Integração</span>
-              <h3>Compatível com o stack de agentes já em uso.</h3>
-              <p>Codex, Claude Code, Cursor, Copilot e vários CLIs entram pela mesma camada MCP e runtime local.</p>
+              <span class="kicker" data-i18n="cap3_kicker">Integration</span>
+              <h3 data-i18n="cap3_title">Compatible with the agent stack already in use.</h3>
+              <p data-i18n="cap3_text">Codex, Claude Code, Cursor, Copilot, and several CLIs come through the same MCP layer and local runtime.</p>
               <ul>
-                <li><span class="bullet"></span><span>25 executáveis locais distintos no README.</span></li>
-                <li><span class="bullet"></span><span>Suporte a BYOK via endpoint compatível com OpenAI.</span></li>
-                <li><span class="bullet"></span><span>Plugins para estender workflow sob demanda.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap3_point_1">25 distinct local executables in the README.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap3_point_2">BYOK support via an OpenAI-compatible endpoint.</span></li>
+                <li><span class="bullet"></span><span data-i18n="cap3_point_3">Plugins to extend the workflow on demand.</span></li>
               </ul>
             </article>
           </div>
@@ -1123,44 +1170,32 @@
         <div class="container">
           <div class="section-head">
             <div>
-              <div class="kicker">Origem e referência</div>
-              <h2>O projeto atual nasce de uma base original e assume essa linhagem.</h2>
+              <div class="kicker" data-i18n="lineage_kicker">Origin and reference</div>
+              <h2 data-i18n="lineage_title">The current project starts from an original base and makes that lineage explicit.</h2>
             </div>
-            <p>
-              O repositório de `EDortta/open-design` aparece no GitHub como fork de `nexu-io/open-design`.
-              A própria documentação também lista as referências que influenciaram a arquitetura, o fluxo de design e os templates.
-            </p>
+            <p data-i18n-html="lineage_intro"></p>
           </div>
 
           <div class="lineage-grid" data-od-id="lineage-grid">
             <article class="lineage-card">
-              <span class="lineage-note">Repositório atual</span>
-              <strong>EDortta/open-design</strong>
-              <p>
-                A versão que você pediu para destacar. Boa escolha para uma landing page porque já posiciona
-                o produto de forma clara para devs e designers que querem trabalhar em artefatos reais.
-              </p>
+              <span class="lineage-note" data-i18n="lineage_card1_note">Current repository</span>
+              <strong><a class="link-inline" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">EDortta/open-design</a></strong>
+              <p data-i18n="lineage_card1_text">The version you asked to highlight. A good landing-page candidate because it already positions the product clearly for devs and designers who want to work with real artifacts.</p>
             </article>
             <article class="lineage-card">
-              <span class="lineage-note">Projeto original mencionado</span>
-              <strong>Fork de nexu-io/open-design</strong>
-              <p>
-                A landing deixa isso explícito para respeitar a origem do projeto e evitar apresentar a base como criação isolada.
-              </p>
+              <span class="lineage-note" data-i18n="lineage_card2_note">Original project mentioned</span>
+              <strong><a class="link-inline" href="https://github.com/nexu-io/open-design" target="_blank" rel="noreferrer" data-i18n="lineage_card2_title">Fork of nexu-io/open-design</a></strong>
+              <p data-i18n="lineage_card2_text">The landing makes this explicit to respect the project origin and avoid presenting the base as an isolated creation.</p>
             </article>
             <article class="lineage-card">
-              <span class="lineage-note">Referências citadas no README</span>
-              <strong>Claude Design, guizang-ppt, html-ppt-skill, HyperFrames e outros</strong>
-              <p>
-                A documentação trata essas referências como parte do ecossistema e da evolução do produto.
-              </p>
+              <span class="lineage-note" data-i18n="lineage_card3_note">References cited in the README</span>
+              <strong data-i18n="lineage_card3_title">Claude Design, guizang-ppt, html-ppt-skill, HyperFrames, and others</strong>
+              <p data-i18n="lineage_card3_text">The documentation treats these references as part of the ecosystem and product evolution.</p>
             </article>
             <article class="lineage-card">
-              <span class="lineage-note">Mensagem para a audiência</span>
-              <strong>É uma plataforma composável, aberta e extensível</strong>
-              <p>
-                O apelo não é “mais uma vitrine bonita”, e sim uma infraestrutura aberta para design operacional com agentes.
-              </p>
+              <span class="lineage-note" data-i18n="lineage_card4_note">Message to the audience</span>
+              <strong data-i18n="lineage_card4_title">It is a composable, open, extensible platform</strong>
+              <p data-i18n="lineage_card4_text">The appeal is not “just another pretty showcase”, but open infrastructure for operational design with agents.</p>
             </article>
           </div>
         </div>
@@ -1170,16 +1205,13 @@
         <div class="container">
           <div class="cta-panel" data-od-id="cta-panel">
             <div>
-              <div class="kicker">Pronto para explorar</div>
-              <h2>Abra o repositório e veja o estúdio de design agent-native em ação.</h2>
-              <p>
-                A melhor continuação para esta página é navegar pelo README, pelos plugins e pelos exemplos do Studio.
-                Se o objetivo é construir páginas visuais com agentes, esse projeto já parte do formato certo: arquivos reais e fluxo reproduzível.
-              </p>
+              <div class="kicker" data-i18n="cta_kicker">Ready to explore</div>
+              <h2 data-i18n="cta_title">Open the repository and see the agent-native design studio in action.</h2>
+              <p data-i18n="cta_text">The best next step after this page is to browse the README, plugins, and Studio examples. If the goal is building visual pages with agents, this project already starts from the right shape: real files and a reproducible flow.</p>
             </div>
             <div class="hero-actions">
-              <a class="btn btn-primary" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer">Ver no GitHub</a>
-              <a class="btn btn-secondary" href="https://discord.gg/mHAjSMV6gz" target="_blank" rel="noreferrer">Entrar no Discord</a>
+              <a class="btn btn-primary" href="https://github.com/EDortta/open-design" target="_blank" rel="noreferrer" data-i18n="cta_primary">View on GitHub</a>
+              <a class="btn btn-secondary" href="https://discord.gg/mHAjSMV6gz" target="_blank" rel="noreferrer" data-i18n="cta_secondary">Join Discord</a>
             </div>
           </div>
         </div>
@@ -1188,8 +1220,8 @@
 
     <footer class="site-footer">
       <div class="container footer-row">
-        <span>Landing page criada a partir das informações públicas do repositório `EDortta/open-design`.</span>
-        <span>Menciona explicitamente a base original `nexu-io/open-design`.</span>
+        <span data-i18n-html="footer_left"></span>
+        <span data-i18n-html="footer_right"></span>
       </div>
     </footer>
   </div>
@@ -1200,6 +1232,542 @@
       var panels = Array.prototype.slice.call(document.querySelectorAll(".tab-panel"));
       var copyButton = document.getElementById("copy-command");
       var commandInput = document.getElementById("install-command");
+      var langButtons = Array.prototype.slice.call(document.querySelectorAll(".lang-btn"));
+      var html = document.documentElement;
+      var storageKey = "od-landing-lang";
+      var translations = {
+        "en": {
+          page_title: "Open Design for GitHub",
+          brand_name: "Open Design",
+          brand_subtitle: "GitHub project landing page",
+          nav_tour: "Tour",
+          nav_capabilities: "Capabilities",
+          nav_lineage: "Origin",
+          nav_github: "View on GitHub",
+          hero_eyebrow: "Open-source design engine for agents",
+          hero_title: "Your agent becomes the product design layer.",
+          hero_body: "Open Design turns briefing, visual direction, and delivery into real artifacts: web prototypes, dashboards, decks, images, and video. Everything stays in editable files, with <code>DESIGN.md</code>, plugins, and direct export.",
+          hero_primary: "Open repository",
+          hero_secondary: "View official website",
+          meta_positioning_label: "Positioning",
+          meta_positioning_value: "Open-source alternative to Claude Design",
+          meta_delivery_label: "Delivery",
+          meta_delivery_value: "HTML, PDF, PPTX, and MP4",
+          meta_operation_label: "Operation",
+          meta_operation_value: "Local-first for macOS and Windows",
+          console_status: "agent-native flow · design + code",
+          console_line_1: "Connects the design loop to the agent your team already uses.",
+          console_line_2: "The system locks the brief, chooses a direction, and generates the first delivery.",
+          console_line_3: "web prototypes · dashboards · decks · images · video",
+          console_line_4: "151 design systems · 261 official plugins · 25 local CLIs",
+          console_line_5: "sandboxed preview · export ready for handoff",
+          install_label: "Install command",
+          copy_button: "Copy command",
+          copy_button_done: "Copied",
+          copy_button_fallback: "Select the text",
+          proof_1_label: "Compatible agents",
+          proof_1_text: "Distinct local executables supported in the native loop.",
+          proof_2_label: "Official plugins",
+          proof_2_text: "Built-in marketplace for skills, scenarios, and systems.",
+          proof_3_label: "Design systems",
+          proof_3_text: "Visual packages ready to shape output with <code>DESIGN.md</code>.",
+          proof_4_label: "Image prompts",
+          proof_4_text: "Repeatable templates with model, aspect ratio, and reference.",
+          tour_kicker: "Product tour",
+          tour_title: "One platform, multiple design artifacts.",
+          tour_intro: "The repository describes a Studio that can generate prototypes, live artifacts, decks, and media from the same visual contract. Below is a direct reading of what that means for teams building interfaces.",
+          tab_prototype: "Prototype",
+          tab_dashboard: "Live artifact",
+          tab_deck: "Deck",
+          tab_media: "Image + Video",
+          prototype_stage: "Prototype Studio",
+          prototype_kicker: "Prompt → direction → artifact",
+          prototype_mock_title: "Landing pages, apps, and dashboards in real HTML.",
+          prototype_preview_label: "Preview",
+          prototype_preview_value: "Sandboxed iframe",
+          prototype_handoff_label: "Handoff",
+          prototype_handoff_value: "Exportable HTML",
+          prototype_surfaces_label: "Surfaces",
+          prototype_surfaces_value: "Web · desktop · mobile",
+          prototype_direction_label: "Direction",
+          prototype_direction_value: "<code>DESIGN.md</code>",
+          prototype_loop_label: "Loop",
+          prototype_loop_value: "Critique + deliver",
+          prototype_copy_title: "Prototyping that starts as code.",
+          prototype_copy_text: "Instead of delivering a static mockup, the flow generates an executable, editable file aligned with the active visual system.",
+          prototype_point_1: "Fits landing pages, mobile apps, and editorial pages in the same flow.",
+          prototype_point_2: "The agent reads the skill, template, and design system before writing the delivery.",
+          prototype_point_3: "Exports as HTML without losing the ability to keep iterating in code.",
+          dashboard_stage: "Live artifact",
+          dashboard_kicker: "Decision room",
+          dashboard_mock_title: "Living artifacts for KPI, research, and operations.",
+          dashboard_edit_label: "Editing",
+          dashboard_edit_value: "Tweaks and parameters",
+          dashboard_use_label: "Use",
+          dashboard_use_value: "Meetings and walls",
+          dashboard_manifest_label: "Manifest",
+          dashboard_manifest_value: "Re-render without reload",
+          dashboard_format_label: "Format",
+          dashboard_format_value: "Editable dashboard",
+          dashboard_scenario_label: "Scenario",
+          dashboard_scenario_value: "Ops · research · product",
+          dashboard_copy_title: "For when design needs to stay useful after preview.",
+          dashboard_copy_text: "The README treats these artifacts as working surfaces, not only presentation pieces.",
+          dashboard_point_1: "Good fit for decision rooms, operational panels, and tracking walls.",
+          dashboard_point_2: "The focus is in-place editability, not only screenshot aesthetics.",
+          dashboard_point_3: "Ideal for teams that want to control content and behavior on the same page.",
+          deck_stage: "Deck mode",
+          deck_kicker: "Web PPT",
+          deck_mock_title: "Browsable, exportable decks guided by layout.",
+          deck_templates_label: "Templates",
+          deck_templates_value: "15 deck families",
+          deck_themes_label: "Themes",
+          deck_themes_value: "36 variations",
+          deck_export_label: "Export",
+          deck_export_value: "HTML · PDF · PPTX",
+          deck_navigation_label: "Navigation",
+          deck_navigation_value: "Keyboard + pages",
+          deck_base_label: "Base",
+          deck_base_value: "Magazine layouts",
+          deck_copy_title: "Deck as a navigation artifact, not only a static slide.",
+          deck_copy_text: "The project includes dedicated templates and skills for presentations with rhythm, keyboard control, and export.",
+          deck_point_1: "Preserves the reading flow in HTML and also delivers PDF and PPTX.",
+          deck_point_2: "Reuses deck frameworks instead of rewriting structure on each generation.",
+          deck_point_3: "Useful for weekly updates, pitch, and editorial presentations.",
+          media_stage: "Media pipeline",
+          media_kicker: "Image + HyperFrames",
+          media_mock_title: "From still to MP4 with prompts, catalogs, and guided rendering.",
+          media_prompts_label: "Prompts",
+          media_prompts_value: "93 templates",
+          media_motion_label: "Motion",
+          media_motion_value: "11 HyperFrames templates",
+          media_image_label: "Image",
+          media_image_value: "High resolution",
+          media_video_label: "Video",
+          media_video_value: "HTML → MP4",
+          media_layer_label: "Layer",
+          media_layer_value: "Model + audio",
+          media_copy_title: "The same studio extends to image and motion.",
+          media_copy_text: "The repository ambition does not stop at UI: it also covers visual assets, repeatable prompts, and programmatic video.",
+          media_point_1: "HyperFrames enters as a native layer for MP4 motion graphics.",
+          media_point_2: "Ready prompts make generation more reproducible and less dependent on random trial.",
+          media_point_3: "A good showcase for teams treating design as a multimedia production system.",
+          cap_kicker: "Why look at this project",
+          cap_title: "Infrastructure for design with agents, not only a pretty interface.",
+          cap_intro: "The core proposal is to turn the laptop and the agent into a working studio, with a skill protocol, local daemon, sandboxed preview, and portable visual contracts.",
+          cap1_kicker: "Filesystem-first",
+          cap1_title: "Artifact as the canonical file.",
+          cap1_text: "The product works with HTML, CSS, PDF, PPTX, and MP4 as real output, not only a closed canvas.",
+          cap1_point_1: "Direct iteration in files.",
+          cap1_point_2: "Embedded preview in sandbox.",
+          cap1_point_3: "Handoff closer to implementation.",
+          cap2_kicker: "Design system",
+          cap2_title: "<code>DESIGN.md</code> as a portable brand contract.",
+          cap2_text: "The README positions the design system as a central piece for shaping every agent output.",
+          cap2_point_1: "151 visual packages cited in the current roadmap.",
+          cap2_point_2: "Reuse across prototype, deck, dashboard, and media.",
+          cap2_point_3: "Consistency without depending on manual rework.",
+          cap3_kicker: "Integration",
+          cap3_title: "Compatible with the agent stack already in use.",
+          cap3_text: "Codex, Claude Code, Cursor, Copilot, and several CLIs come through the same MCP layer and local runtime.",
+          cap3_point_1: "25 distinct local executables in the README.",
+          cap3_point_2: "BYOK support via an OpenAI-compatible endpoint.",
+          cap3_point_3: "Plugins to extend the workflow on demand.",
+          lineage_kicker: "Origin and reference",
+          lineage_title: "The current project starts from an original base and makes that lineage explicit.",
+          lineage_intro: "The repository <a class=\"link-inline\" href=\"https://github.com/EDortta/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>EDortta/open-design</code></a> appears on GitHub as a fork of <a class=\"link-inline\" href=\"https://github.com/nexu-io/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>nexu-io/open-design</code></a>. The documentation also lists the references that influenced the architecture, design flow, and templates.",
+          lineage_card1_note: "Current repository",
+          lineage_card1_text: "The version you asked to highlight. A good landing-page candidate because it already positions the product clearly for devs and designers who want to work with real artifacts.",
+          lineage_card2_note: "Original project mentioned",
+          lineage_card2_title: "Fork of nexu-io/open-design",
+          lineage_card2_text: "The landing makes this explicit to respect the project origin and avoid presenting the base as an isolated creation.",
+          lineage_card3_note: "References cited in the README",
+          lineage_card3_title: "Claude Design, guizang-ppt, html-ppt-skill, HyperFrames, and others",
+          lineage_card3_text: "The documentation treats these references as part of the ecosystem and product evolution.",
+          lineage_card4_note: "Message to the audience",
+          lineage_card4_title: "It is a composable, open, extensible platform",
+          lineage_card4_text: "The appeal is not “just another pretty showcase”, but open infrastructure for operational design with agents.",
+          cta_kicker: "Ready to explore",
+          cta_title: "Open the repository and see the agent-native design studio in action.",
+          cta_text: "The best next step after this page is to browse the README, plugins, and Studio examples. If the goal is building visual pages with agents, this project already starts from the right shape: real files and a reproducible flow.",
+          cta_primary: "View on GitHub",
+          cta_secondary: "Join Discord",
+          footer_left: "Landing page built from the public information in <a class=\"link-inline\" href=\"https://github.com/EDortta/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>EDortta/open-design</code></a>.",
+          footer_right: "It explicitly cites the original base <a class=\"link-inline\" href=\"https://github.com/nexu-io/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>nexu-io/open-design</code></a>."
+        },
+        "es": {
+          page_title: "Open Design para GitHub",
+          brand_name: "Open Design",
+          brand_subtitle: "Landing page del proyecto en GitHub",
+          nav_tour: "Tour",
+          nav_capabilities: "Capacidades",
+          nav_lineage: "Origen",
+          nav_github: "Ver en GitHub",
+          hero_eyebrow: "Motor de diseño open-source para agentes",
+          hero_title: "Tu agente se convierte en la capa de diseño del producto.",
+          hero_body: "Open Design convierte briefing, dirección visual y entrega en artefactos reales: prototipos web, dashboards, decks, imágenes y video. Todo queda en archivos editables, con <code>DESIGN.md</code>, plugins y exportación directa.",
+          hero_primary: "Abrir repositorio",
+          hero_secondary: "Ver sitio oficial",
+          meta_positioning_label: "Posicionamiento",
+          meta_positioning_value: "Alternativa open-source a Claude Design",
+          meta_delivery_label: "Entrega",
+          meta_delivery_value: "HTML, PDF, PPTX y MP4",
+          meta_operation_label: "Operación",
+          meta_operation_value: "Local-first para macOS y Windows",
+          console_status: "flujo agent-native · diseño + código",
+          console_line_1: "Conecta el loop de diseño al agente que tu equipo ya usa.",
+          console_line_2: "El sistema fija el brief, elige una dirección y genera la primera entrega.",
+          console_line_3: "prototipos web · dashboards · decks · imágenes · video",
+          console_line_4: "151 design systems · 261 plugins oficiales · 25 CLIs locales",
+          console_line_5: "preview sandboxed · exportación lista para handoff",
+          install_label: "Comando de instalación",
+          copy_button: "Copiar comando",
+          copy_button_done: "Copiado",
+          copy_button_fallback: "Selecciona el texto",
+          proof_1_label: "Agentes compatibles",
+          proof_1_text: "Ejecutables locales distintos soportados en el loop nativo.",
+          proof_2_label: "Plugins oficiales",
+          proof_2_text: "Marketplace integrado para skills, escenarios y sistemas.",
+          proof_3_label: "Design systems",
+          proof_3_text: "Paquetes visuales listos para moldear la salida con <code>DESIGN.md</code>.",
+          proof_4_label: "Prompts de imagen",
+          proof_4_text: "Templates repetibles con modelo, proporción y referencia.",
+          tour_kicker: "Tour del producto",
+          tour_title: "Una plataforma, varios artefactos de diseño.",
+          tour_intro: "El repositorio describe un Studio capaz de generar prototipos, live artifacts, decks y media a partir del mismo contrato visual. Abajo va una lectura directa de lo que eso significa para equipos que construyen interfaces.",
+          tab_prototype: "Prototype",
+          tab_dashboard: "Live artifact",
+          tab_deck: "Deck",
+          tab_media: "Image + Video",
+          prototype_stage: "Prototype Studio",
+          prototype_kicker: "Prompt → dirección → artefacto",
+          prototype_mock_title: "Landing pages, apps y dashboards en HTML real.",
+          prototype_preview_label: "Preview",
+          prototype_preview_value: "Iframe sandboxed",
+          prototype_handoff_label: "Handoff",
+          prototype_handoff_value: "HTML exportable",
+          prototype_surfaces_label: "Superficies",
+          prototype_surfaces_value: "Web · desktop · mobile",
+          prototype_direction_label: "Dirección",
+          prototype_direction_value: "<code>DESIGN.md</code>",
+          prototype_loop_label: "Loop",
+          prototype_loop_value: "Critique + deliver",
+          prototype_copy_title: "Prototipado que ya nace como código.",
+          prototype_copy_text: "En lugar de entregar una maqueta estática, el flujo genera un archivo ejecutable, editable y alineado con el sistema visual activo.",
+          prototype_point_1: "Sirve para landing pages, apps móviles y páginas editoriales en el mismo flujo.",
+          prototype_point_2: "El agente lee la skill, el template y el design system antes de escribir la entrega.",
+          prototype_point_3: "Exporta como HTML sin perder la posibilidad de seguir iterando en código.",
+          dashboard_stage: "Live artifact",
+          dashboard_kicker: "Decision room",
+          dashboard_mock_title: "Artefactos vivos para KPI, investigación y operación.",
+          dashboard_edit_label: "Edición",
+          dashboard_edit_value: "Tweaks y parámetros",
+          dashboard_use_label: "Uso",
+          dashboard_use_value: "Reuniones y walls",
+          dashboard_manifest_label: "Manifest",
+          dashboard_manifest_value: "Re-render sin reload",
+          dashboard_format_label: "Formato",
+          dashboard_format_value: "Dashboard editable",
+          dashboard_scenario_label: "Escenario",
+          dashboard_scenario_value: "Ops · research · producto",
+          dashboard_copy_title: "Para cuando el diseño tiene que seguir siendo útil después del preview.",
+          dashboard_copy_text: "El README trata estos artefactos como superficies de trabajo, no solo piezas de presentación.",
+          dashboard_point_1: "Buen encaje para decision rooms, paneles operativos y walls de seguimiento.",
+          dashboard_point_2: "El foco es la editabilidad in-place, no solo estética de screenshot.",
+          dashboard_point_3: "Ideal para equipos que quieren controlar contenido y comportamiento en la misma página.",
+          deck_stage: "Deck mode",
+          deck_kicker: "Web PPT",
+          deck_mock_title: "Decks navegables, exportables y guiados por layout.",
+          deck_templates_label: "Templates",
+          deck_templates_value: "15 familias de deck",
+          deck_themes_label: "Temas",
+          deck_themes_value: "36 variaciones",
+          deck_export_label: "Export",
+          deck_export_value: "HTML · PDF · PPTX",
+          deck_navigation_label: "Navegación",
+          deck_navigation_value: "Teclado + páginas",
+          deck_base_label: "Base",
+          deck_base_value: "Layouts magazine",
+          deck_copy_title: "Deck como artefacto de navegación, no solo slide estático.",
+          deck_copy_text: "El proyecto incorpora templates y skills dedicadas para presentaciones con ritmo, teclado y exportación.",
+          deck_point_1: "Preserva el flujo de lectura en HTML y también entrega PDF y PPTX.",
+          deck_point_2: "Reutiliza frameworks de deck en lugar de reescribir la estructura en cada generación.",
+          deck_point_3: "Útil para weekly updates, pitch y presentaciones editoriales.",
+          media_stage: "Media pipeline",
+          media_kicker: "Image + HyperFrames",
+          media_mock_title: "Del still al MP4 con prompts, catálogos y render guiado.",
+          media_prompts_label: "Prompts",
+          media_prompts_value: "93 templates",
+          media_motion_label: "Motion",
+          media_motion_value: "11 templates HyperFrames",
+          media_image_label: "Imagen",
+          media_image_value: "Alta resolución",
+          media_video_label: "Video",
+          media_video_value: "HTML → MP4",
+          media_layer_label: "Capa",
+          media_layer_value: "Modelo + audio",
+          media_copy_title: "El mismo estudio se extiende a imagen y motion.",
+          media_copy_text: "La ambición del repositorio no termina en UI: también cubre activos visuales, prompts repetibles y video programático.",
+          media_point_1: "HyperFrames entra como capa nativa para motion graphics en MP4.",
+          media_point_2: "Los prompts listos hacen la generación más reproducible y menos dependiente del intento aleatorio.",
+          media_point_3: "Buen escaparate para equipos que tratan el diseño como sistema de producción multimedia.",
+          cap_kicker: "Por qué mirar este proyecto",
+          cap_title: "Infra para diseño con agentes, no solo una interfaz bonita.",
+          cap_intro: "La propuesta central es convertir la laptop y el agente en un estudio funcional, con skill protocol, daemon local, preview sandboxed y contratos visuales portables.",
+          cap1_kicker: "Filesystem-first",
+          cap1_title: "Artefacto como archivo canónico.",
+          cap1_text: "El producto trabaja con HTML, CSS, PDF, PPTX y MP4 como salida real, no solo canvas cerrado.",
+          cap1_point_1: "Iteración directa en archivos.",
+          cap1_point_2: "Preview embebido en sandbox.",
+          cap1_point_3: "Handoff más cercano a implementación.",
+          cap2_kicker: "Design system",
+          cap2_title: "<code>DESIGN.md</code> como contrato portátil de marca.",
+          cap2_text: "El README posiciona el design system como pieza central para moldear toda salida del agente.",
+          cap2_point_1: "151 paquetes visuales citados en el roadmap actual.",
+          cap2_point_2: "Reuso entre prototipo, deck, dashboard y media.",
+          cap2_point_3: "Consistencia sin depender de retrabajo manual.",
+          cap3_kicker: "Integración",
+          cap3_title: "Compatible con el stack de agentes ya en uso.",
+          cap3_text: "Codex, Claude Code, Cursor, Copilot y varios CLIs entran por la misma capa MCP y runtime local.",
+          cap3_point_1: "25 ejecutables locales distintos en el README.",
+          cap3_point_2: "Soporte BYOK vía endpoint compatible con OpenAI.",
+          cap3_point_3: "Plugins para extender el workflow bajo demanda.",
+          lineage_kicker: "Origen y referencia",
+          lineage_title: "El proyecto actual nace de una base original y deja explícita esa línea.",
+          lineage_intro: "El repositorio <a class=\"link-inline\" href=\"https://github.com/EDortta/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>EDortta/open-design</code></a> aparece en GitHub como fork de <a class=\"link-inline\" href=\"https://github.com/nexu-io/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>nexu-io/open-design</code></a>. La documentación también lista las referencias que influyeron en la arquitectura, el flujo de diseño y los templates.",
+          lineage_card1_note: "Repositorio actual",
+          lineage_card1_text: "La versión que pediste destacar. Buena opción para una landing porque ya posiciona el producto con claridad para devs y diseñadores que quieren trabajar con artefactos reales.",
+          lineage_card2_note: "Proyecto original mencionado",
+          lineage_card2_title: "Fork de nexu-io/open-design",
+          lineage_card2_text: "La landing deja esto explícito para respetar el origen del proyecto y evitar presentar la base como una creación aislada.",
+          lineage_card3_note: "Referencias citadas en el README",
+          lineage_card3_title: "Claude Design, guizang-ppt, html-ppt-skill, HyperFrames y otros",
+          lineage_card3_text: "La documentación trata estas referencias como parte del ecosistema y de la evolución del producto.",
+          lineage_card4_note: "Mensaje para la audiencia",
+          lineage_card4_title: "Es una plataforma componible, abierta y extensible",
+          lineage_card4_text: "El atractivo no es “otra vitrina bonita”, sino infraestructura abierta para diseño operacional con agentes.",
+          cta_kicker: "Listo para explorar",
+          cta_title: "Abre el repositorio y ve el estudio de diseño agent-native en acción.",
+          cta_text: "La mejor continuación de esta página es navegar el README, los plugins y los ejemplos del Studio. Si el objetivo es construir páginas visuales con agentes, este proyecto ya parte del formato correcto: archivos reales y flujo reproducible.",
+          cta_primary: "Ver en GitHub",
+          cta_secondary: "Entrar en Discord",
+          footer_left: "Landing page creada a partir de la información pública de <a class=\"link-inline\" href=\"https://github.com/EDortta/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>EDortta/open-design</code></a>.",
+          footer_right: "Cita explícitamente la base original <a class=\"link-inline\" href=\"https://github.com/nexu-io/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>nexu-io/open-design</code></a>."
+        },
+        "pt-BR": {
+          page_title: "Open Design para GitHub",
+          brand_name: "Open Design",
+          brand_subtitle: "Landing page do projeto no GitHub",
+          nav_tour: "Tour",
+          nav_capabilities: "Capacidades",
+          nav_lineage: "Origem",
+          nav_github: "Ver no GitHub",
+          hero_eyebrow: "Motor de design open-source para agentes",
+          hero_title: "Seu agente vira a camada de design do produto.",
+          hero_body: "Open Design transforma briefing, direção visual e entrega em artefatos reais: protótipos web, dashboards, decks, imagens e vídeo. Tudo fica em arquivos editáveis, com <code>DESIGN.md</code>, plugins e exportação direta.",
+          hero_primary: "Abrir repositório",
+          hero_secondary: "Ver site oficial",
+          meta_positioning_label: "Posicionamento",
+          meta_positioning_value: "Alternativa open-source ao Claude Design",
+          meta_delivery_label: "Entrega",
+          meta_delivery_value: "HTML, PDF, PPTX e MP4",
+          meta_operation_label: "Operação",
+          meta_operation_value: "Local-first para macOS e Windows",
+          console_status: "fluxo agent-native · design + código",
+          console_line_1: "Conecta o loop de design ao agente que sua equipe já usa.",
+          console_line_2: "O sistema trava o briefing, escolhe direção e gera a primeira entrega.",
+          console_line_3: "protótipos web · dashboards · decks · imagens · vídeo",
+          console_line_4: "151 design systems · 261 plugins oficiais · 25 CLIs locais",
+          console_line_5: "preview sandboxed · exportação pronta para handoff",
+          install_label: "Comando de instalação",
+          copy_button: "Copiar comando",
+          copy_button_done: "Copiado",
+          copy_button_fallback: "Selecione o texto",
+          proof_1_label: "Agentes compatíveis",
+          proof_1_text: "Executáveis locais distintos suportados no loop nativo.",
+          proof_2_label: "Plugins oficiais",
+          proof_2_text: "Marketplace embutido para skills, cenários e sistemas.",
+          proof_3_label: "Design systems",
+          proof_3_text: "Pacotes visuais prontos para moldar a saída com <code>DESIGN.md</code>.",
+          proof_4_label: "Prompts de imagem",
+          proof_4_text: "Templates replicáveis com modelo, proporção e referência.",
+          tour_kicker: "Tour do produto",
+          tour_title: "Uma plataforma, vários artefatos de design.",
+          tour_intro: "O repositório descreve um Studio capaz de gerar protótipos, live artifacts, decks e mídia a partir do mesmo contrato visual. Abaixo vai uma leitura objetiva do que isso significa para times que constroem interfaces.",
+          tab_prototype: "Prototype",
+          tab_dashboard: "Live artifact",
+          tab_deck: "Deck",
+          tab_media: "Image + Video",
+          prototype_stage: "Prototype Studio",
+          prototype_kicker: "Prompt → direção → artefato",
+          prototype_mock_title: "Landing pages, apps e dashboards em HTML real.",
+          prototype_preview_label: "Preview",
+          prototype_preview_value: "Iframe sandboxed",
+          prototype_handoff_label: "Handoff",
+          prototype_handoff_value: "HTML exportável",
+          prototype_surfaces_label: "Superfícies",
+          prototype_surfaces_value: "Web · desktop · mobile",
+          prototype_direction_label: "Direção",
+          prototype_direction_value: "<code>DESIGN.md</code>",
+          prototype_loop_label: "Loop",
+          prototype_loop_value: "Critique + deliver",
+          prototype_copy_title: "Prototipagem que já nasce como código.",
+          prototype_copy_text: "Em vez de entregar uma maquete estática, o fluxo gera um arquivo executável, editável e alinhado ao sistema visual ativo.",
+          prototype_point_1: "Serve para landing pages, apps mobile e páginas editoriais no mesmo fluxo.",
+          prototype_point_2: "O agente lê skill, template e design system antes de escrever a entrega.",
+          prototype_point_3: "Exporta como HTML sem perder a possibilidade de seguir iterando no código.",
+          dashboard_stage: "Live artifact",
+          dashboard_kicker: "Decision room",
+          dashboard_mock_title: "Artefatos vivos para KPI, pesquisa e operação.",
+          dashboard_edit_label: "Edição",
+          dashboard_edit_value: "Tweaks e parâmetros",
+          dashboard_use_label: "Uso",
+          dashboard_use_value: "Reuniões e walls",
+          dashboard_manifest_label: "Manifest",
+          dashboard_manifest_value: "Re-render sem reload",
+          dashboard_format_label: "Formato",
+          dashboard_format_value: "Dashboard editável",
+          dashboard_scenario_label: "Cenário",
+          dashboard_scenario_value: "Ops · research · produto",
+          dashboard_copy_title: "Para quando o design precisa continuar útil depois do preview.",
+          dashboard_copy_text: "O README trata esses artefatos como superfícies de trabalho, não apenas peças de apresentação.",
+          dashboard_point_1: "Bom encaixe para decision rooms, painéis operacionais e walls de acompanhamento.",
+          dashboard_point_2: "O foco é editabilidade in-place, não só estética de screenshot.",
+          dashboard_point_3: "Ideal para times que querem controlar conteúdo e comportamento na mesma página.",
+          deck_stage: "Deck mode",
+          deck_kicker: "Web PPT",
+          deck_mock_title: "Decks navegáveis, exportáveis e guiados por layout.",
+          deck_templates_label: "Templates",
+          deck_templates_value: "15 famílias de deck",
+          deck_themes_label: "Temas",
+          deck_themes_value: "36 variações",
+          deck_export_label: "Export",
+          deck_export_value: "HTML · PDF · PPTX",
+          deck_navigation_label: "Navegação",
+          deck_navigation_value: "Teclado + páginas",
+          deck_base_label: "Base",
+          deck_base_value: "Layouts magazine",
+          deck_copy_title: "Deck como artefato de navegação, não só slide estático.",
+          deck_copy_text: "O projeto incorpora templates e skills dedicadas para apresentações com ritmo, teclado e exportação.",
+          deck_point_1: "Preserva o fluxo de leitura em HTML e entrega também PDF e PPTX.",
+          deck_point_2: "Reaproveita frameworks de deck em vez de reescrever estrutura a cada geração.",
+          deck_point_3: "Útil para weekly updates, pitch e apresentações editoriais.",
+          media_stage: "Media pipeline",
+          media_kicker: "Image + HyperFrames",
+          media_mock_title: "Do still ao MP4 com prompts, catálogos e renderização guiada.",
+          media_prompts_label: "Prompts",
+          media_prompts_value: "93 templates",
+          media_motion_label: "Motion",
+          media_motion_value: "11 templates HyperFrames",
+          media_image_label: "Imagem",
+          media_image_value: "Alta resolução",
+          media_video_label: "Vídeo",
+          media_video_value: "HTML → MP4",
+          media_layer_label: "Camada",
+          media_layer_value: "Modelo + áudio",
+          media_copy_title: "O mesmo estúdio estende para imagem e motion.",
+          media_copy_text: "A ambição do repositório não para em UI: ele também cobre ativos visuais, prompts replicáveis e vídeo programático.",
+          media_point_1: "HyperFrames entra como camada nativa para motion graphics em MP4.",
+          media_point_2: "Os prompts prontos tornam a geração reproduzível e menos dependente de tentativa aleatória.",
+          media_point_3: "Boa vitrine para times que tratam design como sistema de produção multimídia.",
+          cap_kicker: "Por que olhar este projeto",
+          cap_title: "Infra para design com agentes, não só uma interface bonita.",
+          cap_intro: "A proposta central é transformar o laptop e o agente em um estúdio funcional, com skill protocol, daemon local, preview sandboxed e contratos visuais portáveis.",
+          cap1_kicker: "Filesystem-first",
+          cap1_title: "Artefato como arquivo canônico.",
+          cap1_text: "O produto trabalha com HTML, CSS, PDF, PPTX e MP4 como saída real, não só canvas fechado.",
+          cap1_point_1: "Iteração direta em arquivos.",
+          cap1_point_2: "Preview embutido em sandbox.",
+          cap1_point_3: "Handoff mais próximo de implementação.",
+          cap2_kicker: "Design system",
+          cap2_title: "<code>DESIGN.md</code> como contrato de marca portátil.",
+          cap2_text: "O README posiciona o design system como peça central para moldar toda saída do agente.",
+          cap2_point_1: "151 pacotes visuais citados no roadmap atual.",
+          cap2_point_2: "Reuso entre protótipo, deck, dashboard e mídia.",
+          cap2_point_3: "Consistência sem depender de retrabalho manual.",
+          cap3_kicker: "Integração",
+          cap3_title: "Compatível com o stack de agentes já em uso.",
+          cap3_text: "Codex, Claude Code, Cursor, Copilot e vários CLIs entram pela mesma camada MCP e runtime local.",
+          cap3_point_1: "25 executáveis locais distintos no README.",
+          cap3_point_2: "Suporte a BYOK via endpoint compatível com OpenAI.",
+          cap3_point_3: "Plugins para estender workflow sob demanda.",
+          lineage_kicker: "Origem e referência",
+          lineage_title: "O projeto atual nasce de uma base original e assume essa linhagem.",
+          lineage_intro: "O repositório <a class=\"link-inline\" href=\"https://github.com/EDortta/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>EDortta/open-design</code></a> aparece no GitHub como fork de <a class=\"link-inline\" href=\"https://github.com/nexu-io/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>nexu-io/open-design</code></a>. A própria documentação também lista as referências que influenciaram a arquitetura, o fluxo de design e os templates.",
+          lineage_card1_note: "Repositório atual",
+          lineage_card1_text: "A versão que você pediu para destacar. Boa escolha para uma landing page porque já posiciona o produto de forma clara para devs e designers que querem trabalhar em artefatos reais.",
+          lineage_card2_note: "Projeto original mencionado",
+          lineage_card2_title: "Fork de nexu-io/open-design",
+          lineage_card2_text: "A landing deixa isso explícito para respeitar a origem do projeto e evitar apresentar a base como criação isolada.",
+          lineage_card3_note: "Referências citadas no README",
+          lineage_card3_title: "Claude Design, guizang-ppt, html-ppt-skill, HyperFrames e outros",
+          lineage_card3_text: "A documentação trata essas referências como parte do ecossistema e da evolução do produto.",
+          lineage_card4_note: "Mensagem para a audiência",
+          lineage_card4_title: "É uma plataforma composável, aberta e extensível",
+          lineage_card4_text: "O apelo não é “mais uma vitrine bonita”, e sim uma infraestrutura aberta para design operacional com agentes.",
+          cta_kicker: "Pronto para explorar",
+          cta_title: "Abra o repositório e veja o estúdio de design agent-native em ação.",
+          cta_text: "A melhor continuação para esta página é navegar pelo README, pelos plugins e pelos exemplos do Studio. Se o objetivo é construir páginas visuais com agentes, esse projeto já parte do formato certo: arquivos reais e fluxo reproduzível.",
+          cta_primary: "Ver no GitHub",
+          cta_secondary: "Entrar no Discord",
+          footer_left: "Landing page criada a partir das informações públicas de <a class=\"link-inline\" href=\"https://github.com/EDortta/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>EDortta/open-design</code></a>.",
+          footer_right: "Menciona explicitamente a base original <a class=\"link-inline\" href=\"https://github.com/nexu-io/open-design\" target=\"_blank\" rel=\"noreferrer\"><code>nexu-io/open-design</code></a>."
+        }
+      };
+
+      function detectLanguage() {
+        var saved = null;
+        try {
+          saved = window.localStorage.getItem(storageKey);
+        } catch (error) {}
+        if (saved && translations[saved]) {
+          return saved;
+        }
+        var langs = [];
+        if (navigator.languages && navigator.languages.length) {
+          langs = navigator.languages.slice();
+        } else if (navigator.language) {
+          langs = [navigator.language];
+        }
+        for (var i = 0; i < langs.length; i += 1) {
+          var value = String(langs[i] || "").toLowerCase();
+          if (value.indexOf("pt-br") === 0 || value.indexOf("pt") === 0) return "pt-BR";
+          if (value.indexOf("es") === 0) return "es";
+          if (value.indexOf("en") === 0) return "en";
+        }
+        return "en";
+      }
+
+      function applyTranslations(lang) {
+        var dict = translations[lang] || translations.en;
+        document.title = dict.page_title;
+        html.lang = lang;
+        document.querySelectorAll("[data-i18n]").forEach(function (node) {
+          var key = node.getAttribute("data-i18n");
+          if (dict[key]) {
+            node.textContent = dict[key];
+          }
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach(function (node) {
+          var key = node.getAttribute("data-i18n-html");
+          if (dict[key]) {
+            node.innerHTML = dict[key];
+          }
+        });
+        langButtons.forEach(function (button) {
+          var active = button.getAttribute("data-lang") === lang;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+      }
+
+      function setLanguage(lang) {
+        var chosen = translations[lang] ? lang : "en";
+        try {
+          window.localStorage.setItem(storageKey, chosen);
+        } catch (error) {}
+        applyTranslations(chosen);
+      }
 
       function activateTab(tab) {
         var target = tab.getAttribute("aria-controls");
@@ -1232,22 +1800,33 @@
         });
       });
 
+      langButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          setLanguage(button.getAttribute("data-lang"));
+        });
+      });
+
       copyButton.addEventListener("click", async function () {
+        var current = translations[html.lang] || translations.en;
         try {
           await navigator.clipboard.writeText(commandInput.value);
-          copyButton.textContent = "Copiado";
+          copyButton.textContent = current.copy_button_done;
           window.setTimeout(function () {
-            copyButton.textContent = "Copiar comando";
+            var next = translations[html.lang] || translations.en;
+            copyButton.textContent = next.copy_button;
           }, 1400);
         } catch (error) {
           commandInput.focus();
           commandInput.select();
-          copyButton.textContent = "Selecione o texto";
+          copyButton.textContent = current.copy_button_fallback;
           window.setTimeout(function () {
-            copyButton.textContent = "Copiar comando";
+            var next = translations[html.lang] || translations.en;
+            copyButton.textContent = next.copy_button;
           }, 1600);
         }
       });
+
+      applyTranslations(detectLanguage());
     })();
   </script>
 </body>
