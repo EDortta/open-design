@@ -1,0 +1,67 @@
+name: open-design
+
+services:
+  open-design:
+    container_name: open-design
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: open-design-local:latest
+    restart: always
+    network_mode: host
+    environment:
+      NODE_ENV: production
+      NODE_OPTIONS: ${NODE_OPTIONS:---max-old-space-size=192}
+      OD_BIND_HOST: 127.0.0.1
+      OD_PORT: ${OPEN_DESIGN_PORT:-7456}
+      OD_WEB_PORT: ${OPEN_DESIGN_PORT:-7456}
+      OD_API_TOKEN: ${OD_API_TOKEN:-}
+      OD_CODEX_SANDBOX: ${OD_CODEX_SANDBOX:-danger-full-access}
+      HOME: /home/open-design
+      PATH: /home/esteban/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    volumes:
+      - open_design_data:/app/.od
+      - /home/esteban/.local/bin:/home/esteban/.local/bin:ro
+      - /home/esteban/.local/lib:/home/esteban/.local/lib:ro
+      - /home/esteban/.local/share/claude:/home/esteban/.local/share/claude:ro
+      - /home/esteban/.local/share/cursor-agent:/home/esteban/.local/share/cursor-agent:ro
+      - /home/esteban/.local/share/uv:/home/esteban/.local/share/uv:ro
+      - agent_home:/home/open-design
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: ${OPEN_DESIGN_MEM_LIMIT:-512m}
+    pids_limit: 256
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:7456/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  open-design-lan-proxy:
+    container_name: open-design-lan-proxy
+    image: nginx:1.27-alpine
+    restart: always
+    network_mode: host
+    depends_on:
+      open-design:
+        condition: service_healthy
+    volumes:
+      - ./nginx/open-design-lan.conf:/etc/nginx/conf.d/default.conf:ro
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+
+volumes:
+  open_design_data:
+  agent_home:

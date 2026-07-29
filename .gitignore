@@ -1,0 +1,4 @@
+.env
+.staging/
+.credentials/
+.agents/gemini/google-genai.env
