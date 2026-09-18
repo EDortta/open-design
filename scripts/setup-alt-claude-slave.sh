@@ -7,7 +7,8 @@ MODEL="${ALT_CLAUDE_MODEL:-qwen-coder-3b}"
 API_KEY="${ALT_CLAUDE_API_KEY:-local-no-auth}"
 CONFIG_DIR="${ALT_CLAUDE_OPENCODE_DIR:-$ROOT_DIR/.local/alt-claude}"
 CONFIG_FILE="$CONFIG_DIR/opencode.json"
-BRIDGE_PORT="${ALT_CLAUDE_BRIDGE_PORT:-18080}"
+BRIDGE_PORT="${ALT_CLAUDE_BRIDGE_PORT:-}"
+BRIDGE_PORT_FILE="$CONFIG_DIR/bridge.port"
 BRIDGE_HOST="${ALT_CLAUDE_BRIDGE_HOST:-127.0.0.1}"
 BRIDGE_PID=""
 
@@ -33,6 +34,18 @@ for cmd in node curl python3; do
 done
 
 mkdir -p "$CONFIG_DIR"
+
+if [[ -z "$BRIDGE_PORT" ]]; then
+  BRIDGE_PORT="$(python3 - <<'PY'
+import socket
+s = socket.socket()
+s.bind(("127.0.0.1", 0))
+print(s.getsockname()[1])
+s.close()
+PY
+)"
+fi
+printf '%s\n' "$BRIDGE_PORT" > "$BRIDGE_PORT_FILE"
 
 if [[ "$TRANSPORT" == "ssh-incus" ]]; then
   command -v ssh >/dev/null 2>&1 || { echo "ERRO: cliente SSH não encontrado." >&2; exit 1; }
