@@ -93,7 +93,7 @@ proxy_state="$(docker inspect -f '{{.State.Status}}' open-design-lan-proxy 2>/de
 [[ "$proxy_state" == "running" ]] || { echo "ERRO: timeout aguardando proxy: $proxy_state"; exit 32; }
 
 echo "==> Validando endpoints"
-curl -fsS --max-time 10 http://127.0.0.1:18081/v1/models >/dev/null
+docker compose exec -T open-design node -e "fetch('http://alt-claude-bridge:8081/v1/models').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 curl -fsS --max-time 10 http://127.0.0.1:7456/api/health >/dev/null
 
 echo "==> Estado final"
