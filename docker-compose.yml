@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
     image: open-design-local:latest
     restart: always
     network_mode: host
