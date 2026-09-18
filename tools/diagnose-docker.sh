@@ -40,7 +40,7 @@ end_section() {
   printf '7456: '
   curl -i -sS --max-time 5 http://127.0.0.1:7456/api/health 2>&1 || true
   printf '\n18080: '
-  curl -i -sS --max-time 5 http://127.0.0.1:18081/v1/models 2>&1 || true
+  docker compose exec -T open-design node -e "fetch('http://alt-claude-bridge:8081/v1/models').then(async r=>{console.log(r.status, await r.text())}).catch(e=>{console.error(e);process.exit(1)})" 2>&1 || true
   printf '\n'
   end_section
 
@@ -59,7 +59,7 @@ end_section() {
   end_section
 
   section "port listeners"
-  ss -ltnp 2>&1 | grep -E '(:7456|:18081)' || true
+  ss -ltnp 2>&1 | grep -E '(:7456)' || true
   end_section
 
   section "nginx mount source"
