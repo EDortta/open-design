@@ -12,17 +12,17 @@ services:
       CONTAINER_NAME: ${ALT_CLAUDE_CONTAINER_NAME:-alt-claude-slave}
       ALT_CLAUDE_MODEL: ${ALT_CLAUDE_MODEL:-qwen-coder-3b}
       ALT_CLAUDE_BRIDGE_HOST: 127.0.0.1
-      ALT_CLAUDE_BRIDGE_PORT: 18080
+      ALT_CLAUDE_BRIDGE_PORT: 18081
       SLAVE_PORT: 8080
     volumes:
-      - /home/esteban/.ssh:/root/.ssh:ro
+      - /home/esteban/.ssh:/home/bridge/.ssh:ro
     healthcheck:
       test:
         [
           "CMD",
           "python3",
           "-c",
-          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18080/v1/models', timeout=5)"
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18081/v1/models', timeout=5)"
         ]
       interval: 30s
       timeout: 10s
