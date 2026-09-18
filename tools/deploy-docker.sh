@@ -66,7 +66,17 @@ load_od_api_token() {
     return 0
   fi
 
-  echo "ERRO: OD_API_TOKEN não encontrado em .credentials." >&2
+  if docker inspect open-design >/dev/null 2>&1; then
+    existing_token="$(docker inspect -f '{{range .Config.Env}}{{println .}}{{end}}' open-design 2>/dev/null | sed -n 's/^OD_API_TOKEN=//p' | head -n1)"
+    if [[ -n "$existing_token" ]]; then
+      OD_API_TOKEN="$existing_token"
+      export OD_API_TOKEN
+      echo "==> OD_API_TOKEN reaproveitado do container atual"
+      return 0
+    fi
+  fi
+
+  echo "ERRO: OD_API_TOKEN não encontrado em .credentials nem no container atual." >&2
   echo "Verificados: open-design.env, open-design.conf, opendesign.env, opendesign.conf" >&2
   return 1
 }
