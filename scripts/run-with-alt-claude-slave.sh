@@ -91,6 +91,12 @@ export OPENCODE_CONFIG="$CONFIG_FILE"
 export ALT_CLAUDE_API_KEY="${ALT_CLAUDE_API_KEY:-local-no-auth}"
 
 cd "$ROOT_DIR"
+
+echo "==> Preparando ambiente do OpenDesign"
+# shellcheck disable=SC1090
+source <(bash "$ROOT_DIR/scripts/bootstrap-open-design.sh" --export-env 2>/dev/null || true)
+bash "$ROOT_DIR/scripts/bootstrap-open-design.sh"
+
 echo "OpenDesign -> OpenCode -> SSH/Incus -> alt-claude-slave"
 
 if [[ "$#" -eq 0 ]]; then
