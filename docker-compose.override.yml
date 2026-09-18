@@ -6,13 +6,12 @@ services:
       dockerfile: docker/alt-claude-bridge.Dockerfile
       network: host
     restart: always
-    network_mode: host
     environment:
       DOM1_SSH_TARGET: ${DOM1_SSH_TARGET:-esteban@dom1.inovacaosistemas.com.br}
       CONTAINER_NAME: ${ALT_CLAUDE_CONTAINER_NAME:-alt-claude-slave}
       ALT_CLAUDE_MODEL: ${ALT_CLAUDE_MODEL:-qwen-coder-3b}
-      ALT_CLAUDE_BRIDGE_HOST: 127.0.0.1
-      ALT_CLAUDE_BRIDGE_PORT: 18081
+      ALT_CLAUDE_BRIDGE_HOST: 0.0.0.0
+      ALT_CLAUDE_BRIDGE_PORT: 8081
       SLAVE_PORT: 8080
     volumes:
       - /home/esteban/.ssh:/home/bridge/.ssh:ro
@@ -22,7 +21,7 @@ services:
           "CMD",
           "python3",
           "-c",
-          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18081/v1/models', timeout=5)"
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/v1/models', timeout=5)"
         ]
       interval: 30s
       timeout: 10s
