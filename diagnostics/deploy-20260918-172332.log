@@ -1,0 +1,395 @@
+==> OpenDesign Docker deploy
+Date: 2026-09-18T17:23:32-03:00
+Branch: development
+Commit: 29294bbe524a1ae03bec6bcbad9a8247a7ab1dac
+==> Preflight
+==> Validando arquivos exigidos
+==> Validando configuração Docker
+==> Preflight OK
+==> Removendo containers antigos da stack
+open-design
+open-design-alt-claude-bridge
+open-design-lan-proxy
+==> Build
+ Image open-design-lan-proxy:latest Building 
+ Image open-design-alt-claude-bridge Building 
+ Image open-design-local:latest Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.68kB done
+#1 DONE 0.0s
+
+#2 [open-design internal] load build definition from Dockerfile
+#2 transferring dockerfile: 4.89kB done
+#2 DONE 0.1s
+
+#3 [alt-claude-bridge internal] load build definition from alt-claude-bridge.Dockerfile
+#3 transferring dockerfile: 368B 0.0s done
+#3 DONE 0.1s
+
+#4 [open-design internal] load metadata for docker.io/vanjayak/open-design:latest
+#4 ...
+
+#5 [open-design-lan-proxy internal] load build definition from open-design-lan-proxy.Dockerfile
+#5 transferring dockerfile: 789B done
+#5 DONE 0.1s
+
+#6 [open-design-lan-proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#6 ...
+
+#7 [alt-claude-bridge internal] load metadata for docker.io/library/python:3.12-alpine
+#7 DONE 1.3s
+
+#8 [alt-claude-bridge internal] load .dockerignore
+#8 transferring context: 2B done
+#8 DONE 0.0s
+
+#9 [alt-claude-bridge 1/4] FROM docker.io/library/python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b
+#9 CACHED
+
+#10 [alt-claude-bridge 2/4] RUN apk add --no-cache openssh-client     && addgroup -g 1000 bridge     && adduser -D -u 1000 -G bridge -h /home/bridge bridge
+#10 ...
+
+#11 [alt-claude-bridge internal] load build context
+#11 transferring context: 82B done
+#11 DONE 0.0s
+
+#6 [open-design-lan-proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#6 ...
+
+#4 [open-design internal] load metadata for docker.io/vanjayak/open-design:latest
+#4 DONE 2.5s
+
+#8 [open-design-lan-proxy internal] load .dockerignore
+#8 transferring context: 2B done
+#8 DONE 0.0s
+
+#6 [open-design-lan-proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#6 DONE 2.4s
+
+#12 [open-design-lan-proxy 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#12 DONE 0.1s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 resolve docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921 0.1s done
+#13 ...
+
+#12 [open-design-lan-proxy 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 CACHED
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 sha256:29bc9e377572875723237b1953167157aa60cd365c058e21ddf75c0d8b60fc6c 3.04kB / 3.04kB done
+#13 sha256:be1fa1f484fcb984a9df7c7cc233abea264e48d5d9cae4d58fafa704d98f4de0 11.21kB / 11.21kB done
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 0B / 53.47MB 0.1s
+#13 sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921 685B / 685B done
+#13 ...
+
+#14 [open-design-lan-proxy 2/2] RUN cat >/etc/nginx/conf.d/default.conf <<'EOF'
+#14 DONE 0.3s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 sha256:e2c9c68d0d930075e4653f2c0d8d24af9c0d593836fa1acdac1c86379fcac598 0B / 1.26MB 0.2s
+#13 sha256:c45bfe2a2e422e6636048e397bb5d9f653381282d0063e97a840517dc9b01e54 0B / 448B 0.2s
+#13 ...
+
+#15 [open-design-lan-proxy] exporting to image
+#15 exporting layers 0.1s done
+#15 writing image sha256:b46fa30b045074c1e8def5df9a887a73cc5307a025b795e3165cb4efaa41f907 0.2s done
+#15 naming to docker.io/library/open-design-lan-proxy:latest 0.0s done
+#15 DONE 0.3s
+
+#10 [alt-claude-bridge 2/4] RUN apk add --no-cache openssh-client     && addgroup -g 1000 bridge     && adduser -D -u 1000 -G bridge -h /home/bridge bridge
+#10 1.268 (1/4) Installing openssh-keygen (10.3_p1-r1)
+#10 1.325 (2/4) Installing libedit (20260508.3.1-r1)
+#10 1.357 (3/4) Installing openssh-client-common (10.3_p1-r1)
+#10 1.535 (4/4) Installing openssh-client-default (10.3_p1-r1)
+#10 1.641 Executing busybox-1.37.0-r31.trigger
+#10 1.658 OK: 16.9 MiB in 42 packages
+#10 DONE 1.8s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 sha256:c45bfe2a2e422e6636048e397bb5d9f653381282d0063e97a840517dc9b01e54 448B / 448B 0.7s done
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 0B / 15.53MB 0.8s
+#13 ...
+
+#16 [open-design-lan-proxy] resolving provenance for metadata file
+#16 DONE 0.0s
+
+#17 [alt-claude-bridge 3/4] WORKDIR /app
+#17 DONE 0.2s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 ...
+
+#18 [alt-claude-bridge 4/4] COPY scripts/alt-claude-http-bridge.py /app/alt-claude-http-bridge.py
+#18 DONE 0.1s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 3.15MB / 53.47MB 1.3s
+#13 sha256:e2c9c68d0d930075e4653f2c0d8d24af9c0d593836fa1acdac1c86379fcac598 1.05MB / 1.26MB 1.3s
+#13 sha256:e2c9c68d0d930075e4653f2c0d8d24af9c0d593836fa1acdac1c86379fcac598 1.26MB / 1.26MB 1.3s done
+#13 sha256:c98afd15b0f7ffd624a05a59b456d45d8b9d75a033371cd3dbb08b234c8506af 0B / 99B 1.4s
+#13 ...
+
+#19 [alt-claude-bridge] exporting to image
+#19 exporting layers 0.1s done
+#19 writing image sha256:591db220ecbeb124d7c689c4e21a359eb328c1f614aebc754fd69824b2453a1e 0.3s done
+#19 naming to docker.io/library/open-design-alt-claude-bridge 0.0s done
+#19 DONE 0.5s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 ...
+
+#20 [alt-claude-bridge] resolving provenance for metadata file
+#20 DONE 0.0s
+
+#13 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 1.05MB / 15.53MB 1.9s
+#13 sha256:c98afd15b0f7ffd624a05a59b456d45d8b9d75a033371cd3dbb08b234c8506af 99B / 99B 1.7s done
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 0B / 164.40MB 1.9s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 6.29MB / 53.47MB 2.6s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 2.10MB / 15.53MB 2.6s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 3.15MB / 15.53MB 3.0s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 4.19MB / 15.53MB 3.6s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 5.24MB / 15.53MB 4.1s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 6.29MB / 15.53MB 4.6s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 8.39MB / 164.40MB 5.0s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 7.34MB / 15.53MB 5.1s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 8.39MB / 15.53MB 5.6s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 9.44MB / 53.47MB 5.8s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 9.44MB / 15.53MB 6.3s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 10.49MB / 15.53MB 6.7s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 11.53MB / 15.53MB 7.2s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 12.58MB / 15.53MB 7.8s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 16.78MB / 164.40MB 7.8s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 13.63MB / 15.53MB 8.3s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 14.68MB / 15.53MB 8.9s
+#13 sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 15.53MB / 15.53MB 9.3s done
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 0B / 35.90MB 9.3s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 25.17MB / 164.40MB 10.5s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 2.10MB / 35.90MB 10.7s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 11.53MB / 53.47MB 10.9s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 4.19MB / 35.90MB 11.9s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 6.29MB / 35.90MB 13.0s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 33.55MB / 164.40MB 13.6s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 14.68MB / 53.47MB 13.7s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 8.39MB / 35.90MB 14.3s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 10.49MB / 35.90MB 15.3s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 17.83MB / 53.47MB 16.5s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 12.58MB / 35.90MB 16.5s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 41.94MB / 164.40MB 17.2s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 14.68MB / 35.90MB 17.2s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 16.78MB / 35.90MB 18.3s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 20.97MB / 53.47MB 18.7s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 18.87MB / 35.90MB 19.3s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 24.12MB / 53.47MB 20.3s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 20.97MB / 35.90MB 20.6s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 23.07MB / 35.90MB 21.8s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 27.26MB / 53.47MB 22.1s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 50.33MB / 164.40MB 22.3s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 25.17MB / 35.90MB 22.8s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 27.26MB / 35.90MB 23.9s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 30.41MB / 53.47MB 24.1s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 29.36MB / 35.90MB 24.9s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 31.46MB / 35.90MB 25.7s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 33.55MB / 53.47MB 26.3s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 33.55MB / 35.90MB 26.6s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 58.72MB / 164.40MB 26.8s
+#13 sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 35.90MB / 35.90MB 27.5s done
+#13 sha256:44f6beb48cfd198000a1b16c88ba2b1d0709bd078027c83dd60d7d02a99c90b4 0B / 1.88MB 27.6s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 36.70MB / 53.47MB 28.4s
+#13 sha256:44f6beb48cfd198000a1b16c88ba2b1d0709bd078027c83dd60d7d02a99c90b4 1.05MB / 1.88MB 28.4s
+#13 sha256:44f6beb48cfd198000a1b16c88ba2b1d0709bd078027c83dd60d7d02a99c90b4 1.88MB / 1.88MB 28.6s done
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 0B / 6.59MB 28.7s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 1.05MB / 6.59MB 29.4s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 2.10MB / 6.59MB 30.2s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 39.85MB / 53.47MB 30.4s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 67.11MB / 164.40MB 30.8s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 3.15MB / 6.59MB 30.9s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 4.19MB / 6.59MB 31.5s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 42.99MB / 53.47MB 32.1s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 5.24MB / 6.59MB 32.3s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 6.29MB / 6.59MB 32.8s
+#13 sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 6.59MB / 6.59MB 32.9s done
+#13 sha256:c760d79f79f012e1148ba7599beccd50e46704b9893bd16a68d0c4fe6004d7c5 46.10kB / 46.10kB 33.2s done
+#13 sha256:31be80eb030997a866bd515ded4cd71afd066549d69088159428819cce5e4e02 0B / 201.71kB 33.2s
+#13 sha256:31be80eb030997a866bd515ded4cd71afd066549d69088159428819cce5e4e02 201.71kB / 201.71kB 33.5s done
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 0B / 6.32MB 33.6s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 46.14MB / 53.47MB 33.9s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 75.50MB / 164.40MB 33.9s
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 1.05MB / 6.32MB 34.7s
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 2.10MB / 6.32MB 35.3s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 49.28MB / 53.47MB 35.8s
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 3.15MB / 6.32MB 35.8s
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 4.19MB / 6.32MB 36.3s
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 5.24MB / 6.32MB 36.9s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 83.89MB / 164.40MB 37.4s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 52.43MB / 53.47MB 37.6s
+#13 sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 6.32MB / 6.32MB 37.4s done
+#13 sha256:55c908d83a167666689650c88ac4a28b27997b1fb356bc0202fe638a1931e215 0B / 6.10kB 37.6s
+#13 sha256:55c908d83a167666689650c88ac4a28b27997b1fb356bc0202fe638a1931e215 6.10kB / 6.10kB 37.6s done
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 0B / 13.40MB 37.7s
+#13 sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 53.47MB / 53.47MB 37.9s done
+#13 extracting sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 0.1s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 0B / 54.83MB 38.0s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 1.05MB / 13.40MB 38.4s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 2.10MB / 13.40MB 38.9s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 3.15MB / 13.40MB 39.5s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 4.19MB / 13.40MB 40.1s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 3.15MB / 54.83MB 40.1s
+#13 extracting sha256:bc66c3ef2ea36d66807b6c1f6de35959de23c4cfd1c5ba60bf261182d939b8a5 2.1s done
+#13 extracting sha256:e2c9c68d0d930075e4653f2c0d8d24af9c0d593836fa1acdac1c86379fcac598
+#13 extracting sha256:e2c9c68d0d930075e4653f2c0d8d24af9c0d593836fa1acdac1c86379fcac598 0.1s done
+#13 extracting sha256:c45bfe2a2e422e6636048e397bb5d9f653381282d0063e97a840517dc9b01e54 done
+#13 extracting sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 92.27MB / 164.40MB 40.8s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 5.24MB / 13.40MB 40.8s
+#13 extracting sha256:fd8b87759e6c643a03e294e167c3ea8c76afbf6864fe6a1e7572b55358f823de 0.6s done
+#13 extracting sha256:c98afd15b0f7ffd624a05a59b456d45d8b9d75a033371cd3dbb08b234c8506af done
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 6.29MB / 13.40MB 41.4s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 7.34MB / 13.40MB 41.9s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 6.29MB / 54.83MB 42.1s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 8.39MB / 13.40MB 42.4s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 9.44MB / 13.40MB 42.8s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 10.49MB / 13.40MB 43.1s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 11.53MB / 13.40MB 43.5s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 12.58MB / 13.40MB 43.9s
+#13 sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 13.40MB / 13.40MB 43.9s done
+#13 sha256:8dc83f8d2715b319fd125b02f0e22d2ce88070123b8cc397cd23b0edf660f140 0B / 118B 44.0s
+#13 sha256:8dc83f8d2715b319fd125b02f0e22d2ce88070123b8cc397cd23b0edf660f140 118B / 118B 44.1s done
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 9.44MB / 54.83MB 44.4s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 100.66MB / 164.40MB 45.1s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 12.58MB / 54.83MB 45.5s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 15.73MB / 54.83MB 46.7s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 109.05MB / 164.40MB 47.7s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 18.87MB / 54.83MB 48.1s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 22.02MB / 54.83MB 49.4s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 117.44MB / 164.40MB 50.1s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 25.17MB / 54.83MB 50.7s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 28.31MB / 54.83MB 52.1s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 125.83MB / 164.40MB 52.6s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 31.46MB / 54.83MB 53.2s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 34.60MB / 54.83MB 54.3s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 37.75MB / 54.83MB 55.4s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 134.22MB / 164.40MB 55.6s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 40.89MB / 54.83MB 56.5s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 44.04MB / 54.83MB 57.6s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 142.61MB / 164.40MB 58.6s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 47.19MB / 54.83MB 58.7s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 50.33MB / 54.83MB 59.9s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 53.48MB / 54.83MB 61.1s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 150.99MB / 164.40MB 61.5s
+#13 sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 54.83MB / 54.83MB 61.7s done
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 159.38MB / 164.40MB 63.3s
+#13 sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 164.40MB / 164.40MB 64.0s done
+#13 extracting sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb
+#13 extracting sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 5.2s
+#13 extracting sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 10.5s
+#13 extracting sha256:f4ec668fb6b3c9a9ddd211a7c83cea49bb2b3e1cdb448a066f567bcc66c8e3eb 10.6s done
+#13 extracting sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6
+#13 extracting sha256:1603a674af1238194e99d873ae903f7d586095cf1dfd851c891510491fcecdd6 2.2s done
+#13 extracting sha256:44f6beb48cfd198000a1b16c88ba2b1d0709bd078027c83dd60d7d02a99c90b4 0.1s
+#13 extracting sha256:44f6beb48cfd198000a1b16c88ba2b1d0709bd078027c83dd60d7d02a99c90b4 0.1s done
+#13 extracting sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 0.1s
+#13 extracting sha256:292d523acda26ccf236c45816465f91f9cfb744d83b2ef3a2c2b70d02a6ba887 1.5s done
+#13 extracting sha256:c760d79f79f012e1148ba7599beccd50e46704b9893bd16a68d0c4fe6004d7c5
+#13 extracting sha256:c760d79f79f012e1148ba7599beccd50e46704b9893bd16a68d0c4fe6004d7c5 done
+#13 extracting sha256:31be80eb030997a866bd515ded4cd71afd066549d69088159428819cce5e4e02
+#13 extracting sha256:31be80eb030997a866bd515ded4cd71afd066549d69088159428819cce5e4e02 done
+#13 extracting sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e
+#13 extracting sha256:60aeb926e7b99cecc2c3002b3f68a4a346d4d501c1750aaf62eed5c20e97ed5e 0.0s done
+#13 extracting sha256:55c908d83a167666689650c88ac4a28b27997b1fb356bc0202fe638a1931e215 done
+#13 extracting sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322
+#13 extracting sha256:818e6d3688602c6fe1d8523e57abddd6d90889fb5f88f1a0d7a4bc907d4af322 0.1s done
+#13 extracting sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb
+#13 extracting sha256:276167616da6200530d4dac720ac021cc9f64b2b6d53994108d15fdbcb1566cb 1.0s done
+#13 extracting sha256:8dc83f8d2715b319fd125b02f0e22d2ce88070123b8cc397cd23b0edf660f140
+#13 extracting sha256:8dc83f8d2715b319fd125b02f0e22d2ce88070123b8cc397cd23b0edf660f140 done
+#13 DONE 81.5s
+
+#21 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#21 1.179 ( 1/19) Installing curl (8.22.0-r0)
+#21 1.226 ( 2/19) Installing musl-obstack (1.2.3-r2)
+#21 1.260 ( 3/19) Installing libucontext (1.5.1-r0)
+#21 1.279 ( 4/19) Installing gcompat (1.1.0-r4)
+#21 1.303 ( 5/19) Installing libffi (3.5.2-r1)
+#21 1.325 ( 6/19) Installing gdbm (1.26-r0)
+#21 1.350 ( 7/19) Installing xz-libs (5.8.4-r0)
+#21 1.397 ( 8/19) Installing mpdecimal (4.0.1-r0)
+#21 1.427 ( 9/19) Installing libpanelw (6.6_p20260516-r0)
+#21 1.446 (10/19) Installing python3 (3.14.7-r1)
+#21 3.081 (11/19) Installing python3-pycache-pyc0 (3.14.7-r1)
+#21 3.828 (12/19) Installing pyc (3.14.7-r1)
+#21 3.828 (13/19) Installing py3-pip-pyc (26.1.2-r0)
+#21 4.199 (14/19) Installing python3-pyc (3.14.7-r1)
+#21 4.199 (15/19) Installing py3-pip (26.1.2-r0)
+#21 4.527 (16/19) Installing ripgrep (15.1.0-r0)
+#21 4.749 (17/19) Installing su-exec (0.3-r0)
+#21 4.772 (18/19) Installing unzip (6.0-r16)
+#21 4.815 (19/19) Installing zip (3.0-r13)
+#21 4.864 Executing busybox-1.37.0-r31.trigger
+#21 4.874 OK: 92.2 MiB in 80 packages
+#21 DONE 5.5s
+
+#22 [open-design 3/8] RUN mkdir -p /home/open-design /home/open-design/.config/opencode     && chown -R open-design:open-design /home/open-design
+#22 DONE 0.2s
+
+#23 [open-design 4/8] RUN npm install -g @powerformer/vela-cli@0.0.25 opencode-ai
+#23 73.16 
+#23 73.16 added 7 packages in 1m
+#23 73.16 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+#23 73.16 npm warn install-scripts   opencode-ai@1.18.31 (postinstall: node ./postinstall.mjs)
+#23 73.16 npm warn install-scripts
+#23 73.16 npm warn install-scripts Run `npm install -g --allow-scripts=opencode-ai` to allow these scripts once, or `npm config set allow-scripts=opencode-ai --location=user` to allow them for all global installs.
+#23 73.16 npm notice
+#23 73.16 npm notice New major version of npm available! 11.19.0 -> 12.0.2
+#23 73.16 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#23 73.16 npm notice To update run: npm install -g npm@12.0.2
+#23 73.16 npm notice
+#23 DONE 74.6s
+
+#24 [open-design 5/8] RUN cat >/usr/local/bin/codex <<'EOF' && chmod 0755 /usr/local/bin/codex
+#24 DONE 0.2s
+
+#25 [open-design 6/8] RUN cat >/usr/local/bin/grok <<'EOF' && chmod 0755 /usr/local/bin/grok
+#25 DONE 0.2s
+
+#26 [open-design 7/8] RUN cat >/usr/local/bin/copilot <<'EOF' && chmod 0755 /usr/local/bin/copilot
+#26 DONE 0.1s
+
+#27 [open-design 8/8] RUN cat >/usr/local/bin/open-design-entrypoint <<'EOF' && chmod 0755 /usr/local/bin/open-design-entrypoint
+#27 DONE 0.1s
+
+#28 [open-design] exporting to image
+#28 exporting layers
+#28 exporting layers 6.0s done
+#28 writing image sha256:2e710dd8b1dcf42da203b14c307f7f61b7a65310bf1a41e51d1f607e12f81681 done
+#28 naming to docker.io/library/open-design-local:latest 0.0s done
+#28 DONE 6.0s
+
+#29 [open-design] resolving provenance for metadata file
+#29 DONE 0.0s
+ Image open-design-lan-proxy:latest Built 
+ Image open-design-alt-claude-bridge Built 
+ Image open-design-local:latest Built 
+==> Subindo stack com recriação forçada
+ Container open-design-alt-claude-bridge Creating 
+ Container open-design-alt-claude-bridge Created 
+ Container open-design Creating 
+ Container open-design Created 
+ Container open-design-lan-proxy Creating 
+ Container open-design-lan-proxy Created 
+ Container open-design-alt-claude-bridge Starting 
+ Container open-design-alt-claude-bridge Started 
+ Container open-design-alt-claude-bridge Waiting 
+ Container open-design-alt-claude-bridge Error dependency alt-claude-bridge failed to start
+dependency failed to start: container open-design-alt-claude-bridge is unhealthy
+ERRO: deploy terminou com exit=1
+==> Coletando diagnóstico complementar
+Diagnostic saved to diagnostics/docker-20260918-172627.md
+[development 4dc57b2dd] diagnostics: Docker failure 20260918-172627
+ 1 file changed, 232 insertions(+)
+ create mode 100644 diagnostics/docker-20260918-172627.md
+To github.com:EDortta/open-design.git
+   29294bbe5..4dc57b2dd  development -> development
+Diagnostic committed and pushed.
