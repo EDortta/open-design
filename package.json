@@ -28,7 +28,8 @@
     "backfill:failed-runs": "node --experimental-strip-types scripts/backfill-failed-runs-with-artifacts.ts",
     "typecheck": "pnpm -r --workspace-concurrency=4 --if-present run typecheck && tsc -p scripts/tsconfig.json --noEmit",
     "alt-claude:setup": "bash ./scripts/setup-alt-claude-slave.sh",
-    "alt-claude:run": "bash ./scripts/run-with-alt-claude-slave.sh"
+    "alt-claude:run": "bash ./scripts/run-with-alt-claude-slave.sh",
+    "bootstrap:runtime": "bash ./scripts/bootstrap-open-design.sh"
   },
   "devDependencies": {
     "@open-design/components": "workspace:*",
