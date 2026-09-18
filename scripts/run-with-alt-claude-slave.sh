@@ -6,7 +6,8 @@ CONFIG_DIR="${ALT_CLAUDE_OPENCODE_DIR:-$ROOT_DIR/.local/alt-claude}"
 CONFIG_FILE="$CONFIG_DIR/opencode.json"
 TRANSPORT="${ALT_CLAUDE_TRANSPORT:-ssh-incus}"
 BRIDGE_HOST="${ALT_CLAUDE_BRIDGE_HOST:-127.0.0.1}"
-BRIDGE_PORT="${ALT_CLAUDE_BRIDGE_PORT:-18080}"
+BRIDGE_PORT="${ALT_CLAUDE_BRIDGE_PORT:-}"
+BRIDGE_PORT_FILE="$CONFIG_DIR/bridge.port"
 BRIDGE_PID=""
 
 cleanup() {
@@ -20,6 +21,48 @@ trap cleanup EXIT INT TERM
 if [[ ! -f "$CONFIG_FILE" ]]; then
   echo "Configuração ausente; executando setup."
   bash "$ROOT_DIR/scripts/setup-alt-claude-slave.sh"
+fi
+
+if [[ -z "$BRIDGE_PORT" && -f "$BRIDGE_PORT_FILE" ]]; then
+  BRIDGE_PORT="$(cat "$BRIDGE_PORT_FILE")"
+fi
+
+port_is_free() {
+  python3 - "$BRIDGE_HOST" "$1" <<'PY'
+import socket, sys
+host, port = sys.argv[1], int(sys.argv[2])
+s = socket.socket()
+try:
+    s.bind((host, port))
+except OSError:
+    raise SystemExit(1)
+finally:
+    s.close()
+PY
+}
+
+if [[ -z "$BRIDGE_PORT" ]] || ! port_is_free "$BRIDGE_PORT"; then
+  BRIDGE_PORT="$(python3 - "$BRIDGE_HOST" <<'PY'
+import socket, sys
+host = sys.argv[1]
+s = socket.socket()
+s.bind((host, 0))
+print(s.getsockname()[1])
+s.close()
+PY
+)"
+  printf '%s\n' "$BRIDGE_PORT" > "$BRIDGE_PORT_FILE"
+
+  python3 - "$CONFIG_FILE" "$BRIDGE_HOST" "$BRIDGE_PORT" <<'PY'
+import json, sys
+path, host, port = sys.argv[1], sys.argv[2], int(sys.argv[3])
+with open(path, encoding="utf-8") as fh:
+    data = json.load(fh)
+data["provider"]["alt-claude"]["options"]["baseURL"] = f"http://{host}:{port}/v1"
+with open(path, "w", encoding="utf-8") as fh:
+    json.dump(data, fh, indent=2)
+    fh.write("\n")
+PY
 fi
 
 if [[ "$TRANSPORT" == "ssh-incus" ]]; then
