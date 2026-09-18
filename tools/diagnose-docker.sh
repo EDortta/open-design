@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -Eeuo pipefail
+set -u
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
@@ -8,54 +8,65 @@ mkdir -p diagnostics
 stamp="$(date +%Y%m%d-%H%M%S)"
 out="diagnostics/docker-${stamp}.md"
 
+section() {
+  printf '\n## %s\n\n' "$1"
+  printf '%s\n' '~~~text'
+}
+
+end_section() {
+  printf '%s\n' '~~~'
+}
+
 {
-  echo "# OpenDesign Docker diagnostic"
-  echo
-  echo "- Date: $(date -Is)"
-  echo "- Host: $(hostname)"
-  echo "- Branch: $(git branch --show-current)"
-  echo "- Commit: $(git rev-parse HEAD)"
-  echo
-  echo "## docker compose ps"
-  echo "```text"
-  docker compose ps || true
-  echo "```"
-  echo
-  echo "## alt-claude bridge logs"
-  echo "```text"
-  docker compose logs --no-color --tail=200 alt-claude-bridge || true
-  echo "```"
-  echo
-  echo "## open-design logs"
-  echo "```text"
-  docker compose logs --no-color --tail=120 open-design || true
-  echo "```"
-  echo
-  echo "## health probes"
-  echo "```text"
-  printf "7456: "
-  curl -fsS --max-time 5 http://127.0.0.1:7456/api/health || true
-  echo
-  printf "18080: "
-  curl -fsS --max-time 5 http://127.0.0.1:18080/v1/models || true
-  echo
-  echo "```"
-  echo
-  echo "## selected container states"
-  echo "```text"
+  printf '# OpenDesign Docker diagnostic\n\n'
+  printf -- '- Date: %s\n' "$(date -Is)"
+  printf -- '- Host: %s\n' "$(hostname)"
+  printf -- '- Branch: %s\n' "$(git branch --show-current)"
+  printf -- '- Commit: %s\n' "$(git rev-parse HEAD)"
+
+  section "docker compose ps"
+  docker compose ps -a 2>&1 || true
+  end_section
+
+  section "alt-claude bridge logs"
+  docker compose logs --no-color --tail=250 alt-claude-bridge 2>&1 || true
+  end_section
+
+  section "open-design logs"
+  docker compose logs --no-color --tail=150 open-design 2>&1 || true
+  end_section
+
+  section "health probes"
+  printf '7456: '
+  curl -i -sS --max-time 5 http://127.0.0.1:7456/api/health 2>&1 || true
+  printf '\n18080: '
+  curl -i -sS --max-time 5 http://127.0.0.1:18080/v1/models 2>&1 || true
+  printf '\n'
+  end_section
+
+  section "selected container states"
   for c in open-design open-design-alt-claude-bridge open-design-lan-proxy; do
     if docker inspect "$c" >/dev/null 2>&1; then
-      docker inspect -f '{{.Name}} status={{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{else}}n/a{{end}} exit={{.State.ExitCode}} error={{.State.Error}}' "$c" || true
+      docker inspect -f '{{.Name}} status={{.State.Status}} health={{if .State.Health}}{{.State.Health.Status}}{{else}}n/a{{end}} exit={{.State.ExitCode}} error={{.State.Error}}' "$c" 2>&1 || true
+    else
+      printf '%s: not present\n' "$c"
     fi
   done
-  echo "```"
-  echo
-  echo "## local versions"
-  echo "```text"
-  docker --version || true
-  docker compose version || true
-  git --version || true
-  echo "```"
+  end_section
+
+  section "bridge healthcheck history"
+  docker inspect -f '{{range .State.Health.Log}}{{println .Start " exit=" .ExitCode}}{{println .Output}}{{end}}' open-design-alt-claude-bridge 2>&1 || true
+  end_section
+
+  section "port listeners"
+  ss -ltnp 2>&1 | grep -E '(:7456|:18080)' || true
+  end_section
+
+  section "local versions"
+  docker --version 2>&1 || true
+  docker compose version 2>&1 || true
+  git --version 2>&1 || true
+  end_section
 } > "$out"
 
 echo "Diagnostic saved to $out"
