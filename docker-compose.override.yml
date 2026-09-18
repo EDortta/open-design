@@ -1,12 +1,47 @@
 services:
+  alt-claude-bridge:
+    container_name: open-design-alt-claude-bridge
+    build:
+      context: .
+      dockerfile: docker/alt-claude-bridge.Dockerfile
+    restart: always
+    network_mode: host
+    environment:
+      DOM1_SSH_TARGET: ${DOM1_SSH_TARGET:-esteban@dom1.inovacaosistemas.com.br}
+      CONTAINER_NAME: ${ALT_CLAUDE_CONTAINER_NAME:-alt-claude-slave}
+      ALT_CLAUDE_MODEL: ${ALT_CLAUDE_MODEL:-qwen-coder-3b}
+      ALT_CLAUDE_BRIDGE_HOST: 127.0.0.1
+      ALT_CLAUDE_BRIDGE_PORT: 18080
+      SLAVE_PORT: 8080
+    volumes:
+      - /home/esteban/.ssh:/root/.ssh:ro
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python3",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18080/v1/models', timeout=5)"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
   open-design:
+    depends_on:
+      alt-claude-bridge:
+        condition: service_healthy
     env_file:
       - ./.agents/gemini/google-genai.env
       - ./.agents/grok/xai.env
       - ./.agents/copilot/github.env
+    environment:
+      OPENCODE_CONFIG: /home/open-design/.config/opencode/opencode.json
     volumes:
       - /home/esteban/.nvm/versions/node/v22.20.0:/mnt/host-node:ro
       - /home/esteban/.codex:/home/open-design/.codex:ro
       - /home/esteban/.grok:/mnt/host-grok:ro
       - ./.agents/copilot/copilot-linuxmusl-x64:/mnt/host-copilot:ro
       - ./.agents/gemini/settings.json:/home/open-design/.gemini/settings.json:ro
+      - ./.agents/opencode/opencode.json:/home/open-design/.config/opencode/opencode.json:ro
