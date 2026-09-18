@@ -2,10 +2,7 @@ FROM nginx:1.27-alpine
 
 RUN cat >/etc/nginx/conf.d/default.conf <<'EOF'
 server {
-    listen 192.168.71.6:7456;
-    listen 192.168.18.66:7456;
-    listen 192.168.2.103:7456;
-    listen 192.168.0.109:7456;
+    listen 0.0.0.0:7456;
     server_name _;
 
     client_max_body_size 25m;
