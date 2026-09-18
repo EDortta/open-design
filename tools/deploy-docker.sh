@@ -36,6 +36,41 @@ on_exit() {
 }
 trap on_exit EXIT
 
+
+load_od_api_token() {
+  local candidates=(
+    ".credentials/open-design.env"
+    ".credentials/open-design.conf"
+    ".credentials/opendesign.env"
+    ".credentials/opendesign.conf"
+  )
+
+  local f
+  for f in "${candidates[@]}"; do
+    [[ -f "$f" ]] || continue
+    if grep -qE '^[[:space:]]*OD_API_TOKEN=' "$f"; then
+      set -a
+      # shellcheck disable=SC1090
+      source "$f"
+      set +a
+      [[ -n "${OD_API_TOKEN:-}" ]] || continue
+      echo "==> OD_API_TOKEN carregado de $f"
+      export OD_API_TOKEN
+      return 0
+    fi
+  done
+
+  if [[ -n "${OD_API_TOKEN:-}" ]]; then
+    echo "==> OD_API_TOKEN já presente no ambiente"
+    export OD_API_TOKEN
+    return 0
+  fi
+
+  echo "ERRO: OD_API_TOKEN não encontrado em .credentials." >&2
+  echo "Verificados: open-design.env, open-design.conf, opendesign.env, opendesign.conf" >&2
+  return 1
+}
+
 echo "==> OpenDesign Docker deploy"
 echo "Date: $(date -Is)"
 echo "Branch: $(git branch --show-current)"
@@ -43,6 +78,7 @@ echo "Commit: $(git rev-parse HEAD)"
 
 echo "==> Preflight"
 bash tools/docker-preflight.sh
+load_od_api_token
 
 echo "==> Removendo containers antigos da stack"
 docker rm -f open-design open-design-alt-claude-bridge open-design-lan-proxy 2>/dev/null || true
