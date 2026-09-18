@@ -37,8 +37,10 @@ mkdir -p "$CONFIG_DIR"
 if [[ "$TRANSPORT" == "ssh-incus" ]]; then
   command -v ssh >/dev/null 2>&1 || { echo "ERRO: cliente SSH não encontrado." >&2; exit 1; }
 
-  echo "==> Verificando llama-server via SSH + Incus"
-  python3 "$ROOT_DIR/scripts/alt-claude-http-bridge.py" --check
+  echo "==> Garantindo llama-server via SSH + Incus"
+  python3 "$ROOT_DIR/scripts/alt-claude-http-bridge.py" \
+    --ensure-server \
+    --model "$MODEL"
 
   BASE_URL="http://$BRIDGE_HOST:$BRIDGE_PORT/v1"
   echo "==> Iniciando bridge local temporário em $BASE_URL"
