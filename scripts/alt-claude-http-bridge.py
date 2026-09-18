@@ -41,6 +41,7 @@ while True:
 def ssh_base(target: str) -> list[str]:
     return [
         "ssh", "-T",
+        "-F", "/dev/null",
         "-o", "LogLevel=ERROR",
         "-o", "BatchMode=yes",
         "-o", "ConnectTimeout=10",
