@@ -54,14 +54,16 @@ services:
 
   open-design-lan-proxy:
     container_name: open-design-lan-proxy
-    image: nginx:1.27-alpine
+    build:
+      context: .
+      dockerfile: docker/open-design-lan-proxy.Dockerfile
+      network: host
+    image: open-design-lan-proxy:latest
     restart: always
     network_mode: host
     depends_on:
       open-design:
         condition: service_healthy
-    volumes:
-      - ./nginx/open-design-lan.conf:/etc/nginx/conf.d/default.conf:ro
     read_only: true
     tmpfs:
       - /var/cache/nginx
