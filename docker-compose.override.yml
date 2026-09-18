@@ -2,7 +2,11 @@ services:
   open-design:
     env_file:
       - ./.agents/gemini/google-genai.env
+      - ./.agents/grok/xai.env
+      - ./.agents/copilot/github.env
     volumes:
       - /home/esteban/.nvm/versions/node/v22.20.0:/mnt/host-node:ro
       - /home/esteban/.codex:/home/open-design/.codex:ro
+      - /home/esteban/.grok:/mnt/host-grok:ro
+      - ./.agents/copilot/copilot-linuxmusl-x64:/mnt/host-copilot:ro
       - ./.agents/gemini/settings.json:/home/open-design/.gemini/settings.json:ro

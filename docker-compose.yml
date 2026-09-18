@@ -18,7 +18,11 @@ services:
       OD_API_TOKEN: ${OD_API_TOKEN:-}
       OD_CODEX_SANDBOX: ${OD_CODEX_SANDBOX:-danger-full-access}
       HOME: /home/open-design
-      PATH: /home/esteban/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      GROK_HOME: /home/open-design/.grok-runtime
+      HOST_GROK_HOME: /mnt/host-grok
+      COPILOT_HOME: /home/open-design/.copilot
+      COPILOT_BIN: /usr/local/bin/copilot
+      PATH: /usr/local/bin:/home/esteban/.local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
     volumes:
       - open_design_data:/app/.od
       - /home/esteban/.local/bin:/home/esteban/.local/bin:ro
