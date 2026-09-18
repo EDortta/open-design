@@ -1,0 +1,251 @@
+==> OpenDesign Docker deploy
+Date: 2026-09-18T17:47:37-03:00
+Branch: development
+Commit: 1f29581c7b0a90bab26270901626f0088ec67038
+==> Preflight
+==> Validando arquivos exigidos
+==> Validando configuração Docker
+==> Preflight OK
+==> Removendo containers antigos da stack
+open-design
+open-design-alt-claude-bridge
+open-design-lan-proxy
+==> Build
+ Image open-design-lan-proxy:latest Building 
+ Image open-design-alt-claude-bridge Building 
+ Image open-design-local:latest Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.68kB done
+#1 DONE 0.0s
+
+#2 [alt-claude-bridge internal] load build definition from alt-claude-bridge.Dockerfile
+#2 transferring dockerfile: 368B 0.1s done
+#2 DONE 0.2s
+
+#3 [open-design internal] load build definition from Dockerfile
+#3 transferring dockerfile: 4.89kB done
+#3 DONE 0.2s
+
+#4 [open-design-lan-proxy internal] load build definition from open-design-lan-proxy.Dockerfile
+#4 transferring dockerfile: 789B 0.0s done
+#4 DONE 0.3s
+
+#5 [open-design internal] load metadata for docker.io/vanjayak/open-design:latest
+#5 ...
+
+#6 [open-design-lan-proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#6 DONE 1.3s
+
+#5 [open-design internal] load metadata for docker.io/vanjayak/open-design:latest
+#5 DONE 1.3s
+
+#7 [alt-claude-bridge internal] load metadata for docker.io/library/python:3.12-alpine
+#7 DONE 1.3s
+
+#8 [alt-claude-bridge internal] load .dockerignore
+#8 transferring context: 2B done
+#8 DONE 0.0s
+
+#9 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#9 CACHED
+
+#10 [alt-claude-bridge 1/4] FROM docker.io/library/python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b
+#10 CACHED
+
+#11 [alt-claude-bridge internal] load build context
+#11 transferring context: 82B done
+#11 DONE 0.0s
+
+#12 [open-design-lan-proxy 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#12 DONE 0.1s
+
+#13 [alt-claude-bridge 2/4] RUN apk add --no-cache openssh-client     && addgroup -g 1000 bridge     && adduser -D -u 1000 -G bridge -h /home/bridge bridge
+#13 ...
+
+#12 [open-design-lan-proxy 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 CACHED
+
+#14 [open-design-lan-proxy 2/2] RUN cat >/etc/nginx/conf.d/default.conf <<'EOF'
+#14 DONE 0.4s
+
+#15 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#15 ...
+
+#16 [open-design-lan-proxy] exporting to image
+#16 exporting layers 0.1s done
+#16 writing image sha256:a57e27715980e0424bd63022894c924d70632cf889163dc7cbc6df46e35577a4 done
+#16 naming to docker.io/library/open-design-lan-proxy:latest 0.0s done
+#16 DONE 0.1s
+
+#17 [open-design-lan-proxy] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#15 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#15 3.309 ( 1/19) Installing curl (8.22.0-r0)
+#15 3.392 ( 2/19) Installing musl-obstack (1.2.3-r2)
+#15 3.413 ( 3/19) Installing libucontext (1.5.1-r0)
+#15 3.433 ( 4/19) Installing gcompat (1.1.0-r4)
+#15 3.471 ( 5/19) Installing libffi (3.5.2-r1)
+#15 3.490 ( 6/19) Installing gdbm (1.26-r0)
+#15 ...
+
+#13 [alt-claude-bridge 2/4] RUN apk add --no-cache openssh-client     && addgroup -g 1000 bridge     && adduser -D -u 1000 -G bridge -h /home/bridge bridge
+#13 2.348 (1/4) Installing openssh-keygen (10.3_p1-r1)
+#13 2.515 (2/4) Installing libedit (20260508.3.1-r1)
+#13 2.595 (3/4) Installing openssh-client-common (10.3_p1-r1)
+#13 3.050 (4/4) Installing openssh-client-default (10.3_p1-r1)
+#13 3.278 Executing busybox-1.37.0-r31.trigger
+#13 3.288 OK: 16.9 MiB in 42 packages
+#13 DONE 3.5s
+
+#15 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#15 3.529 ( 7/19) Installing xz-libs (5.8.4-r0)
+#15 3.573 ( 8/19) Installing mpdecimal (4.0.1-r0)
+#15 3.627 ( 9/19) Installing libpanelw (6.6_p20260516-r0)
+#15 3.652 (10/19) Installing python3 (3.14.7-r1)
+#15 ...
+
+#18 [alt-claude-bridge 3/4] WORKDIR /app
+#18 DONE 0.4s
+
+#19 [alt-claude-bridge 4/4] COPY scripts/alt-claude-http-bridge.py /app/alt-claude-http-bridge.py
+#19 DONE 0.6s
+
+#15 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#15 ...
+
+#20 [alt-claude-bridge] exporting to image
+#20 exporting layers 0.2s done
+#20 writing image sha256:d9819f8f5e4d3989de4e85e4c89567c5e45242f7a31bf25e32e0375cceea6835 done
+#20 naming to docker.io/library/open-design-alt-claude-bridge done
+#20 DONE 1.3s
+
+#15 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#15 ...
+
+#21 [alt-claude-bridge] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#15 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#15 6.458 (11/19) Installing python3-pycache-pyc0 (3.14.7-r1)
+#15 8.268 (12/19) Installing pyc (3.14.7-r1)
+#15 8.268 (13/19) Installing py3-pip-pyc (26.1.2-r0)
+#15 9.151 (14/19) Installing python3-pyc (3.14.7-r1)
+#15 9.151 (15/19) Installing py3-pip (26.1.2-r0)
+#15 9.847 (16/19) Installing ripgrep (15.1.0-r0)
+#15 10.35 (17/19) Installing su-exec (0.3-r0)
+#15 10.39 (18/19) Installing unzip (6.0-r16)
+#15 10.52 (19/19) Installing zip (3.0-r13)
+#15 10.62 Executing busybox-1.37.0-r31.trigger
+#15 10.65 OK: 92.2 MiB in 80 packages
+#15 DONE 13.5s
+
+#22 [open-design 3/8] RUN mkdir -p /home/open-design /home/open-design/.config/opencode     && chown -R open-design:open-design /home/open-design
+#22 DONE 0.2s
+
+#23 [open-design 4/8] RUN npm install -g @powerformer/vela-cli@0.0.25 opencode-ai
+#23 72.35 
+#23 72.35 added 7 packages in 1m
+#23 72.35 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+#23 72.35 npm warn install-scripts   opencode-ai@1.18.31 (postinstall: node ./postinstall.mjs)
+#23 72.35 npm warn install-scripts
+#23 72.35 npm warn install-scripts Run `npm install -g --allow-scripts=opencode-ai` to allow these scripts once, or `npm config set allow-scripts=opencode-ai --location=user` to allow them for all global installs.
+#23 72.38 npm notice
+#23 72.38 npm notice New major version of npm available! 11.19.0 -> 12.0.2
+#23 72.38 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#23 72.38 npm notice To update run: npm install -g npm@12.0.2
+#23 72.38 npm notice
+#23 DONE 77.9s
+
+#24 [open-design 5/8] RUN cat >/usr/local/bin/codex <<'EOF' && chmod 0755 /usr/local/bin/codex
+#24 DONE 0.2s
+
+#25 [open-design 6/8] RUN cat >/usr/local/bin/grok <<'EOF' && chmod 0755 /usr/local/bin/grok
+#25 DONE 0.2s
+
+#26 [open-design 7/8] RUN cat >/usr/local/bin/copilot <<'EOF' && chmod 0755 /usr/local/bin/copilot
+#26 DONE 0.2s
+
+#27 [open-design 8/8] RUN cat >/usr/local/bin/open-design-entrypoint <<'EOF' && chmod 0755 /usr/local/bin/open-design-entrypoint
+#27 DONE 0.3s
+
+#28 [open-design] exporting to image
+#28 exporting layers
+#28 exporting layers 6.0s done
+#28 writing image sha256:af1c807f0d6e21b347c7c454721df790b2c807972752ab79737ed06fcb3acf32 done
+#28 naming to docker.io/library/open-design-local:latest 0.0s done
+#28 DONE 6.1s
+
+#29 [open-design] resolving provenance for metadata file
+#29 DONE 0.0s
+ Image open-design-lan-proxy:latest Built 
+ Image open-design-alt-claude-bridge Built 
+ Image open-design-local:latest Built 
+==> Subindo stack com recriação forçada
+ Container open-design-alt-claude-bridge Creating 
+ Container open-design-alt-claude-bridge Created 
+ Container open-design Creating 
+ Container open-design Created 
+ Container open-design-lan-proxy Creating 
+ Container open-design-lan-proxy Created 
+ Container open-design-alt-claude-bridge Starting 
+ Container open-design-alt-claude-bridge Started 
+ Container open-design-alt-claude-bridge Waiting 
+ Container open-design-alt-claude-bridge Healthy 
+ Container open-design Starting 
+ Container open-design Started 
+ Container open-design Waiting 
+ Container open-design Healthy 
+ Container open-design-lan-proxy Starting 
+ Container open-design-lan-proxy Started 
+==> Aguardando containers
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+    bridge: running healthy | open-design: running healthy | proxy: restarting
+ERRO: timeout aguardando proxy: restarting
+ERRO: deploy terminou com exit=32
+==> Coletando diagnóstico complementar
+Diagnostic saved to diagnostics/docker-20260918-175140.md
+[development 92a38e43d] diagnostics: Docker failure 20260918-175140
+ 1 file changed, 113 insertions(+)
+ create mode 100644 diagnostics/docker-20260918-175140.md
+To github.com:EDortta/open-design.git
+   1f29581c7..92a38e43d  development -> development
+Diagnostic committed and pushed.
