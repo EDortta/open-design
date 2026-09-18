@@ -36,6 +36,10 @@ end_section() {
   docker compose logs --no-color --tail=150 open-design 2>&1 || true
   end_section
 
+  section "lan proxy logs"
+  docker compose logs --no-color --tail=150 open-design-lan-proxy 2>&1 || true
+  end_section
+
   section "health probes"
   printf '7456: '
   curl -i -sS --max-time 5 http://127.0.0.1:7456/api/health 2>&1 || true
