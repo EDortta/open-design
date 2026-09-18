@@ -8,11 +8,12 @@ USER root
 RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
 
 # Criar diretório home para o usuário open-design (CLIs escrevem configs aqui)
-RUN mkdir -p /home/open-design && chown open-design:open-design /home/open-design
+RUN mkdir -p /home/open-design /home/open-design/.config/opencode \
+    && chown -R open-design:open-design /home/open-design
 
 # AMR in Open Design resolves to the packaged Vela ACP agent. The meta package
 # pulls the platform binary plus the bundled OpenCode companion.
-RUN npm install -g @powerformer/vela-cli@0.0.25
+RUN npm install -g @powerformer/vela-cli@0.0.25 opencode-ai
 
 # Expose the host-mounted Codex CLI in a PATH directory without forcing the app
 # itself to start with the host Node binary. Codex needs a writable CODEX_HOME,
