@@ -9,11 +9,12 @@ services:
       network: host
     image: open-design-local:latest
     restart: always
-    network_mode: host
+    ports:
+      - "127.0.0.1:7456:7456"
     environment:
       NODE_ENV: production
       NODE_OPTIONS: ${NODE_OPTIONS:---max-old-space-size=192}
-      OD_BIND_HOST: 127.0.0.1
+      OD_BIND_HOST: 0.0.0.0
       OD_PORT: ${OPEN_DESIGN_PORT:-7456}
       OD_WEB_PORT: ${OPEN_DESIGN_PORT:-7456}
       OD_API_TOKEN: ${OD_API_TOKEN:-}
