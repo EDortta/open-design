@@ -20,14 +20,43 @@ cleanup() {
 }
 trap cleanup EXIT
 
-if command -v opencode-cli >/dev/null 2>&1; then
-  OPENCODE_BIN="$(command -v opencode-cli)"
-elif command -v opencode >/dev/null 2>&1; then
-  OPENCODE_BIN="$(command -v opencode)"
-else
-  echo "ERRO: OpenCode não encontrado no PATH (opencode-cli/opencode)." >&2
+find_working_opencode() {
+  local candidate resolved
+  for candidate in opencode-cli opencode; do
+    resolved="$(command -v "$candidate" 2>/dev/null || true)"
+    [[ -n "$resolved" ]] || continue
+
+    if [[ ! -e "$resolved" ]]; then
+      echo "AVISO: ignorando $candidate quebrado em $resolved" >&2
+      continue
+    fi
+
+    if "$resolved" --version >/dev/null 2>&1; then
+      printf '%s\n' "$resolved"
+      return 0
+    fi
+
+    echo "AVISO: ignorando $candidate não funcional em $resolved" >&2
+  done
+  return 1
+}
+
+if ! OPENCODE_BIN="$(find_working_opencode)"; then
+  cat >&2 <<'EOF'
+ERRO: nenhum OpenCode funcional foi encontrado no PATH.
+
+Diagnóstico rápido:
+  command -v opencode-cli || true
+  command -v opencode || true
+  ls -l ~/.local/bin/opencode-cli ~/.local/bin/opencode 2>/dev/null || true
+
+O script não usa links quebrados. Instale/repare o OpenCode e execute novamente:
+  pnpm alt-claude:setup
+EOF
   exit 1
 fi
+
+echo "==> OpenCode: $OPENCODE_BIN"
 
 for cmd in node curl python3; do
   command -v "$cmd" >/dev/null 2>&1 || { echo "ERRO: comando obrigatório não encontrado: $cmd" >&2; exit 1; }
