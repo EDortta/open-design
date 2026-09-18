@@ -40,7 +40,7 @@ end_section() {
   printf '7456: '
   curl -i -sS --max-time 5 http://127.0.0.1:7456/api/health 2>&1 || true
   printf '\n18080: '
-  curl -i -sS --max-time 5 http://127.0.0.1:18080/v1/models 2>&1 || true
+  curl -i -sS --max-time 5 http://127.0.0.1:18081/v1/models 2>&1 || true
   printf '\n'
   end_section
 
@@ -59,7 +59,7 @@ end_section() {
   end_section
 
   section "port listeners"
-  ss -ltnp 2>&1 | grep -E '(:7456|:18080)' || true
+  ss -ltnp 2>&1 | grep -E '(:7456|:18081)' || true
   end_section
 
   section "local versions"
