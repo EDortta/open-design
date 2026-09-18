@@ -5,3 +5,4 @@
 .agents/grok/xai.env
 .agents/copilot/github.env
 .agents/copilot/copilot-linuxmusl-x64
+.credentials
