@@ -1,0 +1,19 @@
+==> OpenDesign Docker deploy
+Date: 2026-09-18T18:17:03-03:00
+Branch: development
+Commit: 4e45a347fb11264f4cc4836e87901a7df5d3dd6e
+==> Preflight
+==> Validando arquivos exigidos
+==> Validando configuração Docker
+==> Preflight OK
+ERRO: OD_API_TOKEN não encontrado em .credentials.
+Verificados: open-design.env, open-design.conf, opendesign.env, opendesign.conf
+ERRO: deploy terminou com exit=1
+==> Coletando diagnóstico complementar
+Diagnostic saved to diagnostics/docker-20260918-181703.md
+[development 1ac3fbe87] diagnostics: Docker failure 20260918-181703
+ 1 file changed, 116 insertions(+)
+ create mode 100644 diagnostics/docker-20260918-181703.md
+To github.com:EDortta/open-design.git
+   4e45a347f..1ac3fbe87  development -> development
+Diagnostic committed and pushed.
