@@ -62,6 +62,12 @@ end_section() {
   ss -ltnp 2>&1 | grep -E '(:7456|:18081)' || true
   end_section
 
+  section "nginx mount source"
+  ls -ld nginx nginx/open-design-lan.conf 2>&1 || true
+  file nginx/open-design-lan.conf 2>&1 || true
+  git status --short -- nginx/open-design-lan.conf .recovery diagnostics 2>&1 || true
+  end_section
+
   section "local versions"
   docker --version 2>&1 || true
   docker compose version 2>&1 || true
@@ -78,7 +84,7 @@ if git diff --cached --quiet; then
   exit 0
 fi
 
-git commit -m "diagnostics: Docker failure $stamp"
+git commit --only "$out" -m "diagnostics: Docker failure $stamp"
 git push origin "$(git branch --show-current)"
 
 echo "Diagnostic committed and pushed."
