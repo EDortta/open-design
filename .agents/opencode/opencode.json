@@ -6,7 +6,7 @@
       "npm": "@ai-sdk/openai-compatible",
       "name": "alt-claude-slave",
       "options": {
-        "baseURL": "http://127.0.0.1:18080/v1",
+        "baseURL": "http://127.0.0.1:18081/v1",
         "apiKey": "local-no-auth"
       },
       "models": {
