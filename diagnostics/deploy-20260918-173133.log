@@ -1,0 +1,197 @@
+==> OpenDesign Docker deploy
+Date: 2026-09-18T17:31:33-03:00
+Branch: development
+Commit: 8e5358e1ab0daac92473640ecd728a41b3c4abc4
+==> Preflight
+==> Validando arquivos exigidos
+==> Validando configuração Docker
+==> Preflight OK
+==> Removendo containers antigos da stack
+open-design
+open-design-alt-claude-bridge
+open-design-lan-proxy
+==> Build
+ Image open-design-local:latest Building 
+ Image open-design-lan-proxy:latest Building 
+ Image open-design-alt-claude-bridge Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.68kB done
+#1 DONE 0.0s
+
+#2 [open-design internal] load build definition from Dockerfile
+#2 transferring dockerfile: 4.89kB 0.0s done
+#2 DONE 0.1s
+
+#3 [open-design-lan-proxy internal] load build definition from open-design-lan-proxy.Dockerfile
+#3 transferring dockerfile: 789B 0.0s done
+#3 DONE 0.1s
+
+#4 [alt-claude-bridge internal] load build definition from alt-claude-bridge.Dockerfile
+#4 transferring dockerfile: 368B done
+#4 DONE 0.1s
+
+#5 [alt-claude-bridge internal] load metadata for docker.io/library/python:3.12-alpine
+#5 ...
+
+#6 [open-design internal] load metadata for docker.io/vanjayak/open-design:latest
+#6 DONE 0.9s
+
+#7 [alt-claude-bridge internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [open-design-lan-proxy internal] load metadata for docker.io/library/nginx:1.27-alpine
+#8 DONE 0.9s
+
+#9 [open-design 1/8] FROM docker.io/vanjayak/open-design:latest@sha256:278c8b9b52c68c843b18013f6f67859a5202ac1f937eea63e2585a3d65a6d921
+#9 CACHED
+
+#5 [alt-claude-bridge internal] load metadata for docker.io/library/python:3.12-alpine
+#5 DONE 1.0s
+
+#10 [alt-claude-bridge 1/4] FROM docker.io/library/python:3.12-alpine@sha256:c4634f578a412db396771b61b064c6e546c9d6414c7fb5b1b05d5871f1885f7b
+#10 CACHED
+
+#11 [alt-claude-bridge internal] load build context
+#11 transferring context: 82B done
+#11 DONE 0.1s
+
+#12 [open-design-lan-proxy 1/2] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#12 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 0.1s done
+#12 CACHED
+
+#13 [open-design-lan-proxy 2/2] RUN cat >/etc/nginx/conf.d/default.conf <<'EOF'
+#13 DONE 0.6s
+
+#14 [alt-claude-bridge 2/4] RUN apk add --no-cache openssh-client     && addgroup -g 1000 bridge     && adduser -D -u 1000 -G bridge -h /home/bridge bridge
+#14 ...
+
+#15 [open-design-lan-proxy] exporting to image
+#15 exporting layers 0.1s done
+#15 writing image sha256:0da8db70dd919c84293d4d62beb002b9596c3342881fb0d0f6b30d76f785c2b9 done
+#15 naming to docker.io/library/open-design-lan-proxy:latest 0.0s done
+#15 DONE 0.1s
+
+#16 [open-design-lan-proxy] resolving provenance for metadata file
+#16 DONE 0.0s
+
+#17 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#17 2.322 ( 1/19) Installing curl (8.22.0-r0)
+#17 2.419 ( 2/19) Installing musl-obstack (1.2.3-r2)
+#17 2.455 ( 3/19) Installing libucontext (1.5.1-r0)
+#17 2.517 ( 4/19) Installing gcompat (1.1.0-r4)
+#17 ...
+
+#14 [alt-claude-bridge 2/4] RUN apk add --no-cache openssh-client     && addgroup -g 1000 bridge     && adduser -D -u 1000 -G bridge -h /home/bridge bridge
+#14 1.890 (1/4) Installing openssh-keygen (10.3_p1-r1)
+#14 1.995 (2/4) Installing libedit (20260508.3.1-r1)
+#14 2.088 (3/4) Installing openssh-client-common (10.3_p1-r1)
+#14 2.257 (4/4) Installing openssh-client-default (10.3_p1-r1)
+#14 2.368 Executing busybox-1.37.0-r31.trigger
+#14 2.376 OK: 16.9 MiB in 42 packages
+#14 DONE 2.5s
+
+#17 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#17 2.544 ( 5/19) Installing libffi (3.5.2-r1)
+#17 2.612 ( 6/19) Installing gdbm (1.26-r0)
+#17 2.660 ( 7/19) Installing xz-libs (5.8.4-r0)
+#17 ...
+
+#18 [alt-claude-bridge 3/4] WORKDIR /app
+#18 DONE 0.1s
+
+#17 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#17 2.703 ( 8/19) Installing mpdecimal (4.0.1-r0)
+#17 2.743 ( 9/19) Installing libpanelw (6.6_p20260516-r0)
+#17 2.764 (10/19) Installing python3 (3.14.7-r1)
+#17 ...
+
+#19 [alt-claude-bridge 4/4] COPY scripts/alt-claude-http-bridge.py /app/alt-claude-http-bridge.py
+#19 DONE 0.1s
+
+#20 [alt-claude-bridge] exporting to image
+#20 exporting layers 0.1s done
+#20 writing image sha256:8417ed69dc5f731343d4e037cc78d26fd16452669e685ceb2efdc722d845dd3b done
+#20 naming to docker.io/library/open-design-alt-claude-bridge done
+#20 DONE 0.1s
+
+#21 [alt-claude-bridge] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#17 [open-design 2/8] RUN apk add --no-cache gcompat libc6-compat libstdc++ python3 py3-pip bash su-exec zip curl ripgrep
+#17 4.352 (11/19) Installing python3-pycache-pyc0 (3.14.7-r1)
+#17 5.111 (12/19) Installing pyc (3.14.7-r1)
+#17 5.111 (13/19) Installing py3-pip-pyc (26.1.2-r0)
+#17 5.493 (14/19) Installing python3-pyc (3.14.7-r1)
+#17 5.493 (15/19) Installing py3-pip (26.1.2-r0)
+#17 5.839 (16/19) Installing ripgrep (15.1.0-r0)
+#17 6.098 (17/19) Installing su-exec (0.3-r0)
+#17 6.149 (18/19) Installing unzip (6.0-r16)
+#17 6.194 (19/19) Installing zip (3.0-r13)
+#17 6.274 Executing busybox-1.37.0-r31.trigger
+#17 6.306 OK: 92.2 MiB in 80 packages
+#17 DONE 6.6s
+
+#22 [open-design 3/8] RUN mkdir -p /home/open-design /home/open-design/.config/opencode     && chown -R open-design:open-design /home/open-design
+#22 DONE 0.2s
+
+#23 [open-design 4/8] RUN npm install -g @powerformer/vela-cli@0.0.25 opencode-ai
+#23 80.15 
+#23 80.15 added 7 packages in 1m
+#23 80.15 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+#23 80.15 npm warn install-scripts   opencode-ai@1.18.31 (postinstall: node ./postinstall.mjs)
+#23 80.15 npm warn install-scripts
+#23 80.15 npm warn install-scripts Run `npm install -g --allow-scripts=opencode-ai` to allow these scripts once, or `npm config set allow-scripts=opencode-ai --location=user` to allow them for all global installs.
+#23 80.16 npm notice
+#23 80.16 npm notice New major version of npm available! 11.19.0 -> 12.0.2
+#23 80.16 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+#23 80.16 npm notice To update run: npm install -g npm@12.0.2
+#23 80.16 npm notice
+#23 DONE 80.5s
+
+#24 [open-design 5/8] RUN cat >/usr/local/bin/codex <<'EOF' && chmod 0755 /usr/local/bin/codex
+#24 DONE 0.2s
+
+#25 [open-design 6/8] RUN cat >/usr/local/bin/grok <<'EOF' && chmod 0755 /usr/local/bin/grok
+#25 DONE 0.1s
+
+#26 [open-design 7/8] RUN cat >/usr/local/bin/copilot <<'EOF' && chmod 0755 /usr/local/bin/copilot
+#26 DONE 0.2s
+
+#27 [open-design 8/8] RUN cat >/usr/local/bin/open-design-entrypoint <<'EOF' && chmod 0755 /usr/local/bin/open-design-entrypoint
+#27 DONE 0.2s
+
+#28 [open-design] exporting to image
+#28 exporting layers
+#28 exporting layers 6.1s done
+#28 writing image sha256:c72358c21a0be323505b9f4e4ca3e7205b5848979575420e5df16f292c3ddd5f
+#28 writing image sha256:c72358c21a0be323505b9f4e4ca3e7205b5848979575420e5df16f292c3ddd5f done
+#28 naming to docker.io/library/open-design-local:latest done
+#28 DONE 6.2s
+
+#29 [open-design] resolving provenance for metadata file
+#29 DONE 0.0s
+ Image open-design-alt-claude-bridge Built 
+ Image open-design-local:latest Built 
+ Image open-design-lan-proxy:latest Built 
+==> Subindo stack com recriação forçada
+ Container open-design-alt-claude-bridge Creating 
+ Container open-design-alt-claude-bridge Created 
+ Container open-design Creating 
+ Container open-design Created 
+ Container open-design-lan-proxy Creating 
+ Container open-design-lan-proxy Created 
+ Container open-design-alt-claude-bridge Starting 
+ Container open-design-alt-claude-bridge Started 
+ Container open-design-alt-claude-bridge Waiting 
+ Container open-design-alt-claude-bridge Error dependency alt-claude-bridge failed to start
+dependency failed to start: container open-design-alt-claude-bridge is unhealthy
+ERRO: deploy terminou com exit=1
+==> Coletando diagnóstico complementar
+Diagnostic saved to diagnostics/docker-20260918-173311.md
+[development 89221f649] diagnostics: Docker failure 20260918-173311
+ 1 file changed, 182 insertions(+)
+ create mode 100644 diagnostics/docker-20260918-173311.md
+To github.com:EDortta/open-design.git
+   8e5358e1a..89221f649  development -> development
+Diagnostic committed and pushed.
