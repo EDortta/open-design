@@ -69,10 +69,60 @@ def check_remote(target: str, container: str, remote_port: int) -> int:
     ]
     result = subprocess.run(cmd, text=True, capture_output=True)
     if result.returncode != 0:
-        sys.stderr.write(result.stderr or result.stdout)
         return result.returncode or 1
     print(result.stdout.strip())
     return 0
+
+def ensure_remote_server(target: str, container: str, remote_port: int, model: str) -> int:
+    if check_remote(target, container, remote_port) == 0:
+        return 0
+
+    repo_dir = "/srv/alt-claude/repos/alt-claude-slave"
+    log_path = "/srv/alt-claude/state/llama-server.log"
+    pid_path = "/srv/alt-claude/state/llama-server.pid"
+    start = (
+        "install -d -o slave -g slave -m 0750 /srv/alt-claude/state && "
+        "runuser -u slave -- env "
+        "HOME=/home/slave "
+        "LLAMA_CACHE=/srv/alt-claude/models "
+        "LLAMA_BIN=/home/slave/.local/opt/llama.cpp/bin "
+        "bash -lc "
+        + shlex.quote(
+            f"cd {repo_dir} && "
+            f"nohup ./slave serve {shlex.quote(model)} >{log_path} 2>&1 "
+            f"< /dev/null & echo $! > {pid_path}"
+        )
+    )
+    result = subprocess.run(
+        ssh_base(target) + [
+            f"sudo -n incus exec {shlex.quote(container)} -- bash -lc {shlex.quote(start)}"
+        ],
+        text=True,
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        sys.stderr.write(result.stderr or result.stdout)
+        return result.returncode or 1
+
+    print(f"ALT_CLAUDE_STARTING model={model}", flush=True)
+    import time
+    for _ in range(120):
+        if check_remote(target, container, remote_port) == 0:
+            return 0
+        time.sleep(1)
+
+    log_cmd = (
+        f"sudo -n incus exec {shlex.quote(container)} -- "
+        f"tail -n 80 {shlex.quote(log_path)}"
+    )
+    logs = subprocess.run(
+        ssh_base(target) + [log_cmd],
+        text=True,
+        capture_output=True,
+    )
+    sys.stderr.write("llama-server não ficou pronto em 120s. Último log remoto:\n")
+    sys.stderr.write(logs.stdout or logs.stderr)
+    return 1
 
 class BridgeServer(socketserver.ThreadingTCPServer):
     allow_reuse_address = True
@@ -149,7 +199,14 @@ def main() -> int:
     parser.add_argument("--container", default=os.getenv("CONTAINER_NAME", "alt-claude-slave"))
     parser.add_argument("--remote-port", type=int, default=int(os.getenv("SLAVE_PORT", "8080")))
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--ensure-server", action="store_true")
+    parser.add_argument("--model", default=os.getenv("ALT_CLAUDE_MODEL", "qwen-coder-3b"))
     args = parser.parse_args()
+
+    if args.ensure_server:
+        return ensure_remote_server(
+            args.ssh_target, args.container, args.remote_port, args.model
+        )
 
     if args.check:
         return check_remote(args.ssh_target, args.container, args.remote_port)
